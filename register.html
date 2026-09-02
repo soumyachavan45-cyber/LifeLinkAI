@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register as Donor / Hospital | LifeLink AI</title>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D Canvas Background -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-wrapper">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <div class="nav-actions">
+          <a href="login.html" class="btn btn-glass btn-sm">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Existing User? Sign In
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Register Container -->
+    <main class="container flex items-center justify-center" style="min-height: calc(100vh - 76px); padding: 5rem 1.5rem;">
+      
+      <div class="glass-card" style="width: 100%; max-width: 620px; padding: 2.5rem;">
+        
+        <div class="text-center" style="margin-bottom: 2rem;">
+          <span class="badge badge-crimson" style="margin-bottom: 0.8rem;">JOIN THE LIFELINK NETWORK</span>
+          <h2>Register as a Life Saver</h2>
+          <p style="font-size: 0.92rem; margin-top: 0.3rem;">Create your profile to receive emergency blood alerts and save lives across India.</p>
+        </div>
+
+        <form id="form-register">
+          
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="reg-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Account Role *</label>
+              <select id="reg-role" class="form-select" required>
+                <option value="donor">🩸 Voluntary Blood Donor</option>
+                <option value="recipient">❤️ Patient / Recipient</option>
+                <option value="hospital">🏥 Hospital / Trauma Admin</option>
+                <option value="bloodbank">🏦 Blood Bank Manager</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div class="form-group">
+              <label class="form-label">Blood Group *</label>
+              <select id="reg-blood" class="form-select" required>
+                <option value="O-">O Negative (O-)</option>
+                <option value="O+">O Positive (O+)</option>
+                <option value="A+">A Positive (A+)</option>
+                <option value="A-">A Negative (A-)</option>
+                <option value="B+">B Positive (B+)</option>
+                <option value="B-">B Negative (B-)</option>
+                <option value="AB+">AB Positive (AB+)</option>
+                <option value="AB-">AB Negative (AB-)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Age *</label>
+              <input type="number" id="reg-age" min="18" max="65" class="form-control" value="25" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Gender *</label>
+              <select id="reg-gender" class="form-select" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group">
+              <label class="form-label">City / State *</label>
+              <input type="text" id="reg-city" class="form-control" placeholder="e.g. Mumbai, Maharashtra" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phone (for SOS alerts) *</label>
+              <input type="tel" id="reg-phone" class="form-control" placeholder="e.g. +91 98765 43210" required>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Create Password *</label>
+              <input type="password" id="reg-pass" class="form-control" value="SecurePass123" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 0.5rem;">
+            <label class="flex items-center gap-2" style="font-size: 0.85rem; cursor: pointer;">
+              <input type="checkbox" checked required style="accent-color: var(--primary-500);">
+              <span>I confirm I am medically fit, meet the weight (>50kg) & age criteria, and agree to the Terms.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 1rem;">
+            <i class="fa-solid fa-user-plus"></i> Complete Registration & Verify OTP
+          </button>
+        </form>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- OTP VERIFICATION SIMULATOR MODAL -->
+  <div id="modal-otp" class="modal-overlay">
+    <div class="modal-container text-center" style="max-width: 440px;">
+      <div class="brand-icon" style="margin: 0 auto 1rem auto; width: 48px; height: 48px;">
+        <i class="fa-solid fa-mobile-screen"></i>
+      </div>
+      <h3>Verify Phone OTP</h3>
+      <p style="font-size: 0.88rem; margin-bottom: 1.5rem;">
+        Enter the 4-digit security code sent to your phone for emergency alert verification:
+      </p>
+
+      <div class="flex gap-2 justify-center" style="margin-bottom: 1.5rem;">
+        <input type="text" maxlength="1" value="7" class="form-control text-center" style="width: 50px; font-size: 1.5rem; font-weight: 800;">
+        <input type="text" maxlength="1" value="4" class="form-control text-center" style="width: 50px; font-size: 1.5rem; font-weight: 800;">
+        <input type="text" maxlength="1" value="9" class="form-control text-center" style="width: 50px; font-size: 1.5rem; font-weight: 800;">
+        <input type="text" maxlength="1" value="2" class="form-control text-center" style="width: 50px; font-size: 1.5rem; font-weight: 800;">
+      </div>
+
+      <button id="btn-verify-otp" class="btn btn-primary" style="width: 100%; margin-bottom: 0.8rem;">
+        <i class="fa-solid fa-circle-check"></i> Verify & Enter Dashboard
+      </button>
+
+      <a href="#" class="text-secondary" style="font-size: 0.82rem;" onclick="LifeLinkAuth.showToast('New OTP resent!', 'info')">
+        Didn't receive code? Resend OTP
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+
+  <script>
+    let registeredPendingUser = null;
+
+    document.getElementById('form-register').addEventListener('submit', (e) => {
+      e.preventDefault();
+      registeredPendingUser = {
+        name: document.getElementById('reg-name').value,
+        role: document.getElementById('reg-role').value,
+        bloodGroup: document.getElementById('reg-blood').value,
+        age: parseInt(document.getElementById('reg-age').value),
+        gender: document.getElementById('reg-gender').value,
+        city: document.getElementById('reg-city').value,
+        phone: document.getElementById('reg-phone').value,
+        email: document.getElementById('reg-email').value,
+        isAvailable: true,
+        donationsCount: 0,
+        avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200'
+      };
+
+      document.getElementById('modal-otp').classList.add('active');
+    });
+
+    document.getElementById('btn-verify-otp').addEventListener('click', () => {
+      if (registeredPendingUser) {
+        window.LifeLinkDB.addDonor(registeredPendingUser);
+        window.LifeLinkDB.setCurrentUser(registeredPendingUser);
+        window.LifeLinkAuth.showToast('Account successfully verified! Welcome to LifeLink AI.', 'success');
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 600);
+      }
+    });
+  </script>
+
+</body>
+</html>

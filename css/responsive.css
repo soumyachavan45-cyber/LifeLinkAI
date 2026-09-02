@@ -1,0 +1,140 @@
+/* ==========================================================================
+   LifeLink AI - Responsive Breakpoints & Mobile Optimization
+   ========================================================================== */
+
+/* Tablets & Small Desktops (<= 1024px) */
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 240px 1fr;
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav-links {
+    gap: 1.2rem;
+  }
+}
+
+/* Mobile & Tablets (<= 768px) */
+@media (max-width: 768px) {
+  .navbar {
+    height: 68px;
+  }
+
+  .nav-container {
+    padding: 0 1rem;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: var(--bg-surface);
+    flex-direction: column;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-glass);
+    gap: 1rem;
+  }
+
+  [data-theme="light"] .nav-links {
+    background: #ffffff;
+    border-bottom: 1px solid #cbd5e1;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    margin-top: 68px;
+  }
+
+  .dashboard-sidebar {
+    display: none;
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    height: calc(100vh - 68px);
+  }
+
+  .dashboard-sidebar.mobile-open {
+    display: flex;
+  }
+
+  .dashboard-content {
+    padding: 1.25rem;
+  }
+
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 1.1rem;
+  }
+
+  .stat-number {
+    font-size: 1.7rem;
+  }
+
+  .donor-card-3d-wrapper {
+    height: 220px;
+  }
+
+  .role-switcher-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal-container {
+    padding: 1.5rem;
+  }
+
+  #toast-container {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .scene-controls-widget {
+    bottom: 1rem;
+    left: 1rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Extra Small Devices (<= 480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn-lg {
+    padding: 0.8rem 1.4rem;
+    font-size: 0.95rem;
+  }
+
+  .blood-badge {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+}

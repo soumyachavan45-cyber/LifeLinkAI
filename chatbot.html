@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Medical Assistant | LifeLink AI</title>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D Background Canvas -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-wrapper">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link">Find Donors</a></li>
+          <li><a href="request.html" class="nav-link">Request Blood</a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Inventory</a></li>
+          <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link active">AI Assistant</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+          </button>
+          <button class="btn btn-sos btn-sm btn-sos-trigger">
+            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container" style="padding-top: 110px; padding-bottom: 5rem; max-width: 960px;">
+      
+      <div class="section-header" style="margin-bottom: 2rem;">
+        <span class="badge badge-cyan"><i class="fa-solid fa-robot"></i> 24/7 MEDICAL INTELLIGENCE</span>
+        <h2>LifeLink AI Health Advisor & Eligibility Bot</h2>
+        <p>Ask instant questions regarding donation eligibility, post-donation recovery, travel rules, and blood science.</p>
+      </div>
+
+      <!-- Quick Prompt Suggestion Chips -->
+      <div class="flex gap-2" style="flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center;">
+        <button class="badge badge-crimson" style="cursor: pointer; padding: 0.5rem 1rem;" data-chat-prompt="Can I donate blood after having a fever?">
+          🌡️ Can I donate after fever?
+        </button>
+        <button class="badge badge-cyan" style="cursor: pointer; padding: 0.5rem 1rem;" data-chat-prompt="What is the rule for tattoos and piercings?">
+          🎨 Tattoo / Piercing rules
+        </button>
+        <button class="badge badge-emerald" style="cursor: pointer; padding: 0.5rem 1rem;" data-chat-prompt="What are the age and weight eligibility requirements?">
+          📋 Weight & Age requirements
+        </button>
+        <button class="badge badge-amber" style="cursor: pointer; padding: 0.5rem 1rem;" data-chat-prompt="What should I eat before donating blood?">
+          🥗 Pre-donation diet & water
+        </button>
+        <button class="badge badge-purple" style="cursor: pointer; padding: 0.5rem 1rem;" data-chat-prompt="Why is O Negative the universal donor?">
+          🩸 Universal donor facts
+        </button>
+      </div>
+
+      <!-- Main Chatbot Window -->
+      <div class="chat-window">
+        
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="flex items-center gap-3">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--grad-primary); display: flex; align-items: center; justify-content: center; color: #fff;">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <div>
+              <h5 style="margin: 0;">LifeLink AI Doctor Assistant</h5>
+              <span class="badge badge-emerald" style="font-size: 0.68rem; padding: 0.15rem 0.5rem;">
+                <span class="pulse-dot emerald"></span> ONLINE & VERIFIED
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-muted" style="font-size: 0.8rem;"><i class="fa-solid fa-lock"></i> HIPAA Secure</span>
+          </div>
+        </div>
+
+        <!-- Chat Messages Scroll Container -->
+        <div id="chat-messages-box" class="chat-messages">
+          <!-- Populated by chatbot.js -->
+        </div>
+
+        <!-- Chat Input Bar -->
+        <div class="chat-input-area">
+          <input type="text" id="chat-input-text" class="form-control" placeholder="Ask any medical or blood donation question..." autocomplete="off">
+          <button id="chat-send-btn" class="btn btn-primary" style="padding: 0 1.5rem;">
+            <i class="fa-solid fa-paper-plane"></i> Send
+          </button>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 2.5rem 0; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+      <div class="container">
+        © 2026 LifeLink AI Platform • AI Medical Assistance Module
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/chatbot.js"></script>
+
+</body>
+</html>

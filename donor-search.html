@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Donors | LifeLink AI Smart Matcher</title>
+
+  <!-- FontAwesome & Leaflet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D Canvas Background -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-wrapper">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link active">Find Donors</a></li>
+          <li><a href="request.html" class="nav-link">Request Blood</a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Inventory</a></li>
+          <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Assistant</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+          </button>
+          <button class="btn btn-sos btn-sm btn-sos-trigger">
+            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container" style="padding-top: 110px; padding-bottom: 5rem;">
+      
+      <!-- Section Header -->
+      <div class="section-header" style="margin-bottom: 2.5rem;">
+        <span class="badge badge-cyan"><i class="fa-solid fa-brain"></i> AI PROXIMITY & COMPATIBILITY MATCH</span>
+        <h2>Find Verified Blood Donors Across India</h2>
+        <p>Our intelligent AI matching engine ranks donors based on blood compatibility, GPS distance, response reliability, and donation intervals.</p>
+      </div>
+
+      <!-- Search Filter Panel -->
+      <div class="glass-card" style="margin-bottom: 2.5rem; padding: 2rem;">
+        <div class="grid grid-cols-4 gap-4 items-center">
+          
+          <!-- Blood Group -->
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label">Blood Group Needed:</label>
+            <select id="search-blood-group" class="form-select">
+              <option value="ALL">All Compatible Blood Groups</option>
+              <option value="O-">O Negative (O-) - Universal</option>
+              <option value="O+">O Positive (O+)</option>
+              <option value="A+">A Positive (A+)</option>
+              <option value="A-">A Negative (A-)</option>
+              <option value="B+">B Positive (B+)</option>
+              <option value="B-">B Negative (B-)</option>
+              <option value="AB+">AB Positive (AB+)</option>
+              <option value="AB-">AB Negative (AB-)</option>
+            </select>
+          </div>
+
+          <!-- City / District -->
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label">State / City (India):</label>
+            <select id="search-city" class="form-select">
+              <option value="ALL">All India (Pan-India GPS)</option>
+              <option value="Mumbai">Mumbai (Maharashtra)</option>
+              <option value="New Delhi">New Delhi (Delhi NCR)</option>
+              <option value="Bengaluru">Bengaluru (Karnataka)</option>
+              <option value="Pune">Pune (Maharashtra)</option>
+              <option value="Chennai">Chennai (Tamil Nadu)</option>
+              <option value="Kolkata">Kolkata (West Bengal)</option>
+              <option value="Hyderabad">Hyderabad (Telangana)</option>
+              <option value="Jaipur">Jaipur (Rajasthan)</option>
+              <option value="Ahmedabad">Ahmedabad (Gujarat)</option>
+              <option value="Lucknow">Lucknow (Uttar Pradesh)</option>
+            </select>
+          </div>
+
+          <!-- Radius Range -->
+          <div class="form-group" style="margin: 0;">
+            <div class="flex justify-between">
+              <label class="form-label">Search Radius:</label>
+              <span id="radius-val-display" class="text-cyan" style="font-weight: 700; font-size: 0.88rem;">25 km</span>
+            </div>
+            <input type="range" id="search-radius" min="2" max="50" value="25" class="form-control" style="padding: 0.4rem;">
+          </div>
+
+          <!-- Availability Check & Apply -->
+          <div class="flex items-center gap-4" style="margin-top: 1.2rem;">
+            <label class="flex items-center gap-2" style="font-size: 0.88rem; cursor: pointer;">
+              <input type="checkbox" id="filter-available-only" checked style="width: 18px; height: 18px; accent-color: var(--primary-500);">
+              <span>Available Only</span>
+            </label>
+            <button id="btn-apply-filters" class="btn btn-primary btn-sm flex-1">
+              <i class="fa-solid fa-filter"></i> Apply Filters
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Main Results Grid (Left: Donor Cards, Right: Interactive Map) -->
+      <div class="grid grid-cols-3 gap-6">
+        
+        <!-- Donors List (2 cols) -->
+        <div style="grid-column: span 2;">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <h4 id="matched-donors-count">Loading Available Donors...</h4>
+            <span class="badge badge-emerald"><i class="fa-solid fa-shield-check"></i> 100% ID VERIFIED</span>
+          </div>
+
+          <div id="donors-grid-container" class="grid grid-cols-2 gap-4">
+            <!-- Populated by donor-search.js -->
+          </div>
+        </div>
+
+        <!-- Radar Interactive Map (1 col) -->
+        <div>
+          <div class="glass-card" style="padding: 1.5rem; position: sticky; top: 96px;">
+            <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
+              <h4><i class="fa-solid fa-location-crosshairs text-crimson"></i> Live GPS Radar</h4>
+              <span class="badge badge-cyan"><span class="pulse-dot"></span> LIVE PINS</span>
+            </div>
+            
+            <div id="map-container" style="height: 440px; border-radius: var(--radius-md);"></div>
+            
+            <div style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--text-muted);">
+              <i class="fa-solid fa-circle-info text-cyan"></i> Red markers represent active verified donors ready for emergency contact. Click any marker to view distance and direct request.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 2.5rem 0; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+      <div class="container">
+        © 2026 LifeLink AI Platform • 3D Bio-Vessel Emergency Network
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/donor-search.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | LifeLink AI Medical Platform</title>
+
+  <!-- FontAwesome, Leaflet & Chart.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- App Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D Background Canvas -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-wrapper">
+    
+    <!-- Top Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link">Find Donors</a></li>
+          <li><a href="request.html" class="nav-link">Request Blood</a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Inventory</a></li>
+          <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Assistant</a></li>
+          <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+          </button>
+          <button class="btn btn-sos btn-sm btn-sos-trigger">
+            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          </button>
+          <a href="profile.html" class="btn btn-glass btn-sm flex items-center gap-2">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" 
+                 class="user-avatar auth-user-avatar" style="width: 26px; height: 26px;" alt="Avatar">
+            <span class="auth-user-name">Rohan Deshmukh</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard Main Layout -->
+    <div class="dashboard-layout">
+      
+      <!-- Sidebar -->
+      <aside class="dashboard-sidebar">
+        <div>
+          <!-- Current User Profile Card in Sidebar -->
+          <div class="sidebar-user">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" 
+                 class="user-avatar auth-user-avatar" alt="Avatar">
+            <div class="user-info">
+              <h5 class="auth-user-name">Alex Mercer</h5>
+              <div class="user-role-badge">
+                <span class="auth-user-role">DONOR</span> • <span class="auth-user-blood">O-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Links -->
+          <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+              <a href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Overview</a>
+            </li>
+            <li class="sidebar-item">
+              <a href="donor-search.html"><i class="fa-solid fa-user-doctor"></i> Find Donors</a>
+            </li>
+            <li class="sidebar-item">
+              <a href="request.html"><i class="fa-solid fa-hand-holding-medical"></i> Emergency Request <span class="badge badge-crimson">LIVE</span></a>
+            </li>
+            <li class="sidebar-item">
+              <a href="bloodbanks.html"><i class="fa-solid fa-hospital"></i> Blood Inventory</a>
+            </li>
+            <li class="sidebar-item">
+              <a href="compatibility.html"><i class="fa-solid fa-dna"></i> Compatibility Matrix</a>
+            </li>
+            <li class="sidebar-item">
+              <a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Health Doctor</a>
+            </li>
+            <li class="sidebar-item">
+              <a href="profile.html"><i class="fa-solid fa-id-card"></i> Digital QR Card</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sidebar Footer Logout -->
+        <div>
+          <button id="btn-logout" class="btn btn-glass btn-sm" style="width: 100%;">
+            <i class="fa-solid fa-right-from-bracket"></i> Log Out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Dashboard Main Content -->
+      <main class="dashboard-content">
+
+        <!-- 1-CLICK DEMO ROLE SWITCHER BAR -->
+        <div class="role-switcher-bar">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-cyan"></i>
+            <span style="font-weight: 700; font-size: 0.88rem;">1-Click Role Perspective Switcher:</span>
+          </div>
+          <div class="role-buttons">
+            <button class="btn-role-tab active" data-switch-role="donor">
+              <i class="fa-solid fa-heart"></i> Donor (Alex Mercer - O-)
+            </button>
+            <button class="btn-role-tab" data-switch-role="hospital">
+              <i class="fa-solid fa-hospital"></i> Hospital (Dr. Evelyn Reed)
+            </button>
+            <button class="btn-role-tab" data-switch-role="recipient">
+              <i class="fa-solid fa-bed-pulse"></i> Recipient (Sarah Jenkins)
+            </button>
+            <button class="btn-role-tab" data-switch-role="admin">
+              <i class="fa-solid fa-shield-halved"></i> System Admin
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Header Welcome -->
+        <div class="dashboard-header">
+          <div>
+            <h2>Welcome Back, <span class="auth-user-name text-gradient">Alex Mercer</span>! 👋</h2>
+            <p>Here is your real-time medical emergency telemetry and blood dispatch status.</p>
+          </div>
+          <div class="dashboard-actions">
+            <a href="request.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-plus"></i> New Blood Request
+            </a>
+            <button class="btn btn-sos btn-sm btn-sos-trigger">
+              <i class="fa-solid fa-bolt"></i> Quick SOS
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Overview Grid -->
+        <div class="grid grid-cols-4 gap-4" style="margin-bottom: 2rem;">
+          
+          <div class="glass-card stat-card">
+            <div class="stat-icon crimson">
+              <i class="fa-solid fa-droplet"></i>
+            </div>
+            <div>
+              <div class="stat-number">14</div>
+              <div class="stat-label">Total Donations</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon emerald">
+              <i class="fa-solid fa-shield-heart"></i>
+            </div>
+            <div>
+              <div class="stat-number">42</div>
+              <div class="stat-label">Lives Saved</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon cyan">
+              <i class="fa-solid fa-award"></i>
+            </div>
+            <div>
+              <div class="stat-number">2,100</div>
+              <div class="stat-label">Hero Reward Pts</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon amber">
+              <i class="fa-solid fa-bell"></i>
+            </div>
+            <div>
+              <div class="stat-number">3</div>
+              <div class="stat-label">Active Emergencies</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live Dispatch Tracker Bar -->
+        <div id="active-request-tracker" style="margin-bottom: 2rem;">
+          <!-- Populated by request.js -->
+        </div>
+
+        <!-- Analytics Charts Grid -->
+        <div class="grid grid-cols-2 gap-6" style="margin-bottom: 2rem;">
+          
+          <!-- Supply vs Demand Bar Chart -->
+          <div class="glass-card">
+            <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
+              <h4><i class="fa-solid fa-chart-column text-emerald"></i> Blood Donations vs Emergency Requests</h4>
+              <span class="badge badge-emerald">2026 TRENDS</span>
+            </div>
+            <div style="height: 280px; position: relative;">
+              <canvas id="chart-supply-demand"></canvas>
+            </div>
+          </div>
+
+          <!-- Blood Group Distribution Donut Chart -->
+          <div class="glass-card">
+            <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
+              <h4><i class="fa-solid fa-chart-pie text-crimson"></i> Regional Blood Stock Distribution</h4>
+              <span class="badge badge-cyan">8 BLOOD GROUPS</span>
+            </div>
+            <div style="height: 280px; position: relative;">
+              <canvas id="chart-blood-distribution"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live Emergency Requests & Response Trajectory -->
+        <div class="grid grid-cols-3 gap-6">
+          
+          <!-- Emergency Live Requests List (2 cols) -->
+          <div style="grid-column: span 2;">
+            <div class="glass-card">
+              <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
+                <h4><i class="fa-solid fa-tower-broadcast text-crimson"></i> Active Emergency Requests</h4>
+                <div class="flex gap-2">
+                  <button class="btn btn-sm btn-glass active" data-req-filter="ALL">All</button>
+                  <button class="btn btn-sm btn-glass" data-req-filter="CRITICAL">Critical</button>
+                  <button class="btn btn-sm btn-glass" data-req-filter="URGENT">Urgent</button>
+                </div>
+              </div>
+
+              <div id="live-requests-feed">
+                <!-- Populated by request.js -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Response Time Benchmark Card (1 col) -->
+          <div>
+            <div class="glass-card" style="margin-bottom: 1.5rem;">
+              <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+                <h4><i class="fa-solid fa-bolt text-cyan"></i> Response Speed</h4>
+                <span class="badge badge-cyan">AI OPTIMIZED</span>
+              </div>
+              <p style="font-size: 0.85rem; margin-bottom: 1rem;">Emergency alert latency reduced from 42 mins to 11 mins:</p>
+              <div style="height: 180px; position: relative;">
+                <canvas id="chart-response-time"></canvas>
+              </div>
+            </div>
+
+            <!-- Quick Donor ID Card Preview -->
+            <div class="glass-card text-center">
+              <span class="badge badge-amber" style="margin-bottom: 0.8rem;">VERIFIED BADGE</span>
+              <h4 class="auth-user-name">Alex Mercer</h4>
+              <p style="font-size: 0.82rem; margin-bottom: 1rem;">Universal Blood Hero (O-)</p>
+              <a href="profile.html" class="btn btn-glass btn-sm" style="width: 100%;">
+                <i class="fa-solid fa-qrcode"></i> View 3D QR Donor Card
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- EMERGENCY SOS MODAL -->
+  <div id="modal-sos-countdown" class="modal-overlay">
+    <div class="modal-container text-center" style="border-color: #ff1744;">
+      <div style="font-size: 3.5rem; color: #ff1744; margin-bottom: 0.5rem; animation: pulse-sos 1s infinite;">
+        🚨
+      </div>
+      <h2 style="color: #ff1744; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
+      <p style="margin-bottom: 1.5rem;">
+        Broadcasting emergency blood requirement and GPS location to all <b>compatible nearby donors</b>, <b>trauma centers</b>, and <b>emergency response dispatch</b> in:
+      </p>
+      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #ff1744; line-height: 1; margin-bottom: 1.5rem;">
+        5
+      </div>
+      <div class="flex gap-3 justify-center">
+        <button id="btn-cancel-sos" class="btn btn-secondary btn-lg">
+          <i class="fa-solid fa-xmark"></i> Cancel
+        </button>
+        <button id="btn-confirm-instant-sos" class="btn btn-sos btn-lg">
+          <i class="fa-solid fa-bolt"></i> Send Instantly Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/request.js"></script>
+  <script src="js/analytics.js"></script>
+
+</body>
+</html>

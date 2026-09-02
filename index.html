@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeLink AI | Smart Emergency Blood & Community Response Platform</title>
+  
+  <!-- Meta SEO & PWA -->
+  <meta name="description" content="LifeLink AI connects blood donors, recipients, hospitals, and emergency responders in real-time with AI matching and 3D medical visualizers.">
+  <meta name="theme-color" content="#e53935">
+
+  <!-- FontAwesome & Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- App Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D WebGL Three.js Background Canvas (Blood Dropping from Glass Vase) -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <!-- App Wrapper -->
+  <div class="app-wrapper">
+
+    <!-- Emergency Broadcast Live Ticker -->
+    <div class="emergency-ticker">
+      <div class="container flex justify-between items-center" style="padding: 0 1rem;">
+        <div class="ticker-content">
+          <span class="badge badge-crimson" style="background: rgba(255,255,255,0.2); color: #fff;">
+            <i class="fa-solid fa-satellite-dish"></i> LIVE ALERT
+          </span>
+          <div class="ticker-item">
+            <span>🚨 <b>Critical Request:</b> O- Negative required at AIIMS Apex Trauma Center, New Delhi (ICU Bed 4) • 3 Units Needed</span>
+            <span style="opacity: 0.5;">|</span>
+            <span>⚡ <b>Active Donors Nearby:</b> 28 Ready across Mumbai, Delhi & Bengaluru • Average Dispatch: 11 Mins</span>
+          </div>
+        </div>
+        <a href="request.html" class="btn btn-sm btn-glass" style="background: rgba(255,255,255,0.15); color: #fff; border: none; padding: 0.25rem 0.75rem; font-size: 0.78rem;">
+          View Requests →
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-droplet"></i>
+          </div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active" data-i18n="nav_home">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link" data-i18n="nav_search">Find Donors</a></li>
+          <li><a href="request.html" class="nav-link" data-i18n="nav_request">Request Blood</a></li>
+          <li><a href="bloodbanks.html" class="nav-link" data-i18n="nav_inventory">Hospitals & Banks</a></li>
+          <li><a href="compatibility.html" class="nav-link" data-i18n="nav_compatibility">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link" data-i18n="nav_ai_bot">AI Assistant</a></li>
+          <li><a href="dashboard.html" class="nav-link" data-i18n="nav_dashboard">Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <!-- Multi-language Select -->
+          <select id="lang-selector" class="form-select" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: var(--radius-full);">
+            <option value="en">🇺🇸 EN</option>
+            <option value="hi">🇮🇳 हिंदी</option>
+            <option value="mr">🇮🇳 मराठी</option>
+            <option value="es">🇪🇸 ES</option>
+          </select>
+
+          <!-- Theme Toggle -->
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Dark/Light Mode">
+            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+          </button>
+
+          <!-- Emergency SOS Quick Button -->
+          <button id="btn-trigger-sos" class="btn btn-sos btn-sm">
+            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          </button>
+
+          <!-- Sign In / Dashboard CTA -->
+          <a href="login.html" class="btn btn-primary btn-sm">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+          </a>
+
+          <!-- Mobile Hamburger -->
+          <button id="mobile-menu-toggle" class="btn btn-glass btn-icon" style="display: none;" title="Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main style="padding-top: 100px;">
+
+      <!-- HERO SECTION -->
+      <section class="container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+        <div class="grid grid-cols-2 items-center gap-8">
+          
+          <!-- Hero Text Content -->
+          <div>
+            <div class="badge badge-crimson" style="margin-bottom: 1.25rem;">
+              <span class="pulse-dot"></span> SMART EMERGENCY RESPONSE 2.0
+            </div>
+            
+            <h1 style="margin-bottom: 1.2rem;">
+              Connecting Donors. <br/>
+              <span class="text-gradient">Saving Lives Instantly</span> <br/>
+              With Medical AI.
+            </h1>
+
+            <p style="font-size: 1.15rem; margin-bottom: 2rem; max-width: 540px;" data-i18n="hero_desc">
+              LifeLink AI connects critical patients, voluntary blood donors, hospital trauma centers, and blood banks in real time using 3D visual matching and intelligent GPS routing.
+            </p>
+
+            <div class="flex gap-4 items-center" style="flex-wrap: wrap;">
+              <button class="btn btn-sos btn-lg btn-sos-trigger">
+                <i class="fa-solid fa-bolt"></i> EMERGENCY SOS
+              </button>
+              <a href="donor-search.html" class="btn btn-primary btn-lg" data-i18n="btn_find_donor">
+                <i class="fa-solid fa-magnifying-glass"></i> Find Donors
+              </a>
+              <a href="register.html" class="btn btn-glass btn-lg" data-i18n="btn_donate">
+                <i class="fa-solid fa-hand-holding-heart"></i> Become a Donor
+              </a>
+            </div>
+
+            <!-- Quick Trust Metric Row -->
+            <div class="flex items-center gap-6" style="margin-top: 2.8rem; border-top: 1px solid var(--border-glass); padding-top: 1.5rem;">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-emerald fa-xl"></i>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.95rem;">100% Verified</div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Hospital Certified</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-cyan fa-xl"></i>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.95rem;">&lt; 15 Mins</div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Avg Alert Response</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-lock text-amber fa-xl"></i>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.95rem;">HIPAA Safe</div>
+                  <div style="font-size: 0.78rem; color: var(--text-muted);">Encrypted Records</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero 3D Glass Flask Interactive Preview Card -->
+          <div>
+            <div class="glass-card glass-card-hero" style="padding: 2.2rem; position: relative;">
+              
+              <!-- Card Top Header -->
+              <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+                <div>
+                  <span class="badge badge-cyan">3D BIO-VESSEL TELEMETRY</span>
+                  <h3 style="margin-top: 0.3rem;">Universal Donor O-</h3>
+                </div>
+                <div class="pulse-dot emerald"></div>
+              </div>
+
+              <!-- Interactive Blood Drop Graphic Illustration / Stage -->
+              <div class="glass-vase-stage">
+                <div class="glass-vase-glow"></div>
+                
+                <!-- SVG Anatomical Flask Overlay -->
+                <svg class="glass-vial-graphic" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Glass Contours -->
+                  <path d="M70 20 H130 V60 L170 170 C180 200 160 220 100 220 C40 220 20 200 30 170 L70 60 Z" 
+                        stroke="rgba(255,255,255,0.4)" stroke-width="3" fill="rgba(255,255,255,0.03)"/>
+                  <!-- Fluid Level Inside -->
+                  <path d="M42 160 C70 150 130 170 158 160 L168 180 C175 205 155 215 100 215 C45 215 25 205 32 180 Z" 
+                        fill="url(#bloodGrad)" opacity="0.85"/>
+                  <!-- Droplet falling inside -->
+                  <path d="M100 80 C95 90 90 100 90 110 C90 118 95 125 100 125 C105 125 110 118 110 110 C110 100 105 90 100 80 Z" 
+                        fill="#ff1744">
+                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,60; 0,0" dur="2s" repeatCount="indefinite"/>
+                  </path>
+                  <defs>
+                    <linearGradient id="bloodGrad" x1="100" y1="150" x2="100" y2="220" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#ff1744"/>
+                      <stop offset="0.6" stop-color="#d50000"/>
+                      <stop offset="1" stop-color="#4a0007"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+
+                <div style="position: absolute; bottom: 1.5rem; text-align: center; width: 100%;">
+                  <span class="badge badge-emerald">REAL-TIME FLUID PURITY: 99.8%</span>
+                </div>
+              </div>
+
+              <!-- Quick Mini Matcher Inside Hero Card -->
+              <div style="background: var(--bg-surface-elevated); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
+                <div class="flex justify-between items-center" style="font-size: 0.88rem; margin-bottom: 0.5rem;">
+                  <span class="text-secondary">Instant Blood Match Filter:</span>
+                  <span class="text-cyan" style="font-weight: 700;">8 Types Ready</span>
+                </div>
+                <div class="flex gap-2" style="flex-wrap: wrap;">
+                  <button class="blood-badge blood-badge-sm" data-select-blood="O-" data-select-type="donor">O-</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="O+" data-select-type="donor">O+</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="A+" data-select-type="donor">A+</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="A-" data-select-type="donor">A-</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="B+" data-select-type="donor">B+</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="B-" data-select-type="donor">B-</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="AB+" data-select-type="donor">AB+</button>
+                  <button class="blood-badge blood-badge-sm" data-select-blood="AB-" data-select-type="donor">AB-</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ANIMATED STATS SECTION -->
+      <section style="background: var(--bg-surface); border-y: 1px solid var(--border-glass); padding: 3.5rem 0;">
+        <div class="container">
+          <div class="grid grid-cols-4">
+            
+            <div class="glass-card stat-card">
+              <div class="stat-icon crimson">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="24850" data-suffix="+">0</div>
+                <div class="stat-label" data-i18n="stat_donors">Active Donors</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card">
+              <div class="stat-icon emerald">
+                <i class="fa-solid fa-heart-pulse"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="58420" data-suffix="+">0</div>
+                <div class="stat-label" data-i18n="stat_lives">Lives Saved</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card">
+              <div class="stat-icon cyan">
+                <i class="fa-solid fa-hospital"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="420" data-suffix="+">0</div>
+                <div class="stat-label" data-i18n="stat_hospitals">Partner Hospitals</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card">
+              <div class="stat-icon amber">
+                <i class="fa-solid fa-stopwatch"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="11" data-suffix="m">0</div>
+                <div class="stat-label" data-i18n="stat_response">Avg Response Time</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE RADAR DONOR SEARCH & MAP SECTION -->
+      <section class="container" style="padding: 5rem 1.5rem;">
+        <div class="section-header">
+          <span class="badge badge-cyan"><i class="fa-solid fa-crosshairs"></i> AI GEOLOCATION DISPATCH</span>
+          <h2>Nearby Verified Donors & Emergency Radar</h2>
+          <p>Our AI analyzes distance, historical response rate, and blood group compatibility to rank the fastest available heroes.</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6" style="margin-bottom: 2rem;">
+          <!-- Left 2 Cols: Donors Grid Preview -->
+          <div style="grid-column: span 2;">
+            <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
+              <h4 id="matched-donors-count">Loading Available Donors...</h4>
+              <a href="donor-search.html" class="btn btn-outline-crimson btn-sm">
+                Open Full Search & Filters <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+            <div id="donors-grid-container" class="grid grid-cols-2 gap-4">
+              <!-- Dynamically populated by donor-search.js -->
+            </div>
+          </div>
+
+          <!-- Right 1 Col: Radar Map Mini Container -->
+          <div>
+            <div class="glass-card" style="padding: 1.25rem;">
+              <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+                <h4><i class="fa-solid fa-map-location-dot text-crimson"></i> Live Radar Map</h4>
+                <span class="badge badge-emerald"><span class="pulse-dot emerald"></span> GPS ACTIVE</span>
+              </div>
+              <div id="map-container" style="height: 380px;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES SHOWCASE -->
+      <section style="background: var(--bg-surface); padding: 5rem 0; border-top: 1px solid var(--border-glass);">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-crimson">ADVANCED HEALTHCARE PLATFORM</span>
+            <h2 data-i18n="section_features_title">Next-Gen Emergency Medical Network</h2>
+            <p>From smart AI donor triage to digital QR cards and live inventory management, LifeLink AI is built for mission-critical response.</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-6">
+            
+            <div class="glass-card">
+              <div class="stat-icon crimson" style="margin-bottom: 1.25rem;">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <h4>AI Donor Ranking</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
+                Proprietary scoring engine factoring in exact ABO/Rh compatibility, distance radius, last donation interval, and live availability.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <div class="stat-icon cyan" style="margin-bottom: 1.25rem;">
+                <i class="fa-solid fa-qrcode"></i>
+              </div>
+              <h4>3D Digital QR Donor ID</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
+                Flippable 3D digital donor card with scannable QR verification, medical emergency contacts, and instant badge downloads.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <div class="stat-icon emerald" style="margin-bottom: 1.25rem;">
+                <i class="fa-solid fa-satellite-dish"></i>
+              </div>
+              <h4>1-Click SOS Broadcast</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
+                Instant panic emergency dispatcher alerting compatible donors, nearby ambulances, and trauma surgeons within 15 km in under 5 seconds.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <div class="stat-icon amber" style="margin-bottom: 1.25rem;">
+                <i class="fa-solid fa-boxes-stacked"></i>
+              </div>
+              <h4>Hospital Blood Inventory</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
+                Live inventory tracking across hospitals and regional blood banks with critical shortage thresholds and expiration alerts.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <div class="stat-icon crimson" style="margin-bottom: 1.25rem;">
+                <i class="fa-solid fa-certificate"></i>
+              </div>
+              <h4>Honor Certificates & Badges</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
+                Gamified rewards, Bronze-to-Legend donor tiers, and verifiable certificates of appreciation printable on demand.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <div class="stat-icon cyan" style="margin-bottom: 1.25rem;">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <h4>AI Medical Assistant</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
+                Instant eligibility triage chatbot answering medical questions about fevers, tattoos, travel, medications, and pre-donation preparation.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- UPCOMING BLOOD CAMPS -->
+      <section class="container" style="padding: 5rem 1.5rem;">
+        <div class="section-header">
+          <span class="badge badge-emerald">COMMUNITY IMPACT</span>
+          <h2 data-i18n="section_camps_title">Upcoming Blood Donation Drives</h2>
+          <p>Join organized community camps, earn hero badges, and save lives in your neighborhood.</p>
+        </div>
+
+        <div id="donation-camps-grid" class="grid grid-cols-2 gap-6">
+          <!-- Populated by bloodbanks.js -->
+        </div>
+      </section>
+
+      <!-- FAQ ACCORDION -->
+      <section style="background: var(--bg-surface); padding: 5rem 0; border-top: 1px solid var(--border-glass);">
+        <div class="container" style="max-width: 860px;">
+          <div class="section-header">
+            <span class="badge badge-cyan">FREQUENTLY ASKED QUESTIONS</span>
+            <h2>Everything You Need To Know</h2>
+            <p>Clear answers to common questions regarding voluntary blood donation and emergency safety.</p>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div class="glass-card">
+              <h4>❓ How often can I donate blood?</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                Whole blood can be safely donated every <b>56 days (8 weeks)</b>. Platelet donations can be made every 7 days (up to 24 times per year), while plasma can be donated every 28 days.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <h4>❓ Will donating blood weaken my immune system?</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                No! The average adult body contains 10-12 pints of blood and donates only 1 pint (about 450ml). Your body replaces the fluid plasma within 24 hours and red blood cells within 4-6 weeks.
+              </p>
+            </div>
+
+            <div class="glass-card">
+              <h4>❓ What is the Universal Blood Donor type?</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                <b>O Negative (O-)</b> is the universal red blood cell donor because its red blood cells lack A, B, and Rh antigens, making it safe for any emergency patient regardless of their blood group.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 4rem 0 2rem 0;">
+      <div class="container">
+        <div class="grid grid-cols-4 gap-8" style="margin-bottom: 3rem;">
+          
+          <div style="grid-column: span 1;">
+            <div class="nav-brand" style="margin-bottom: 1rem;">
+              <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+              <span>LifeLink <span class="text-crimson">AI</span></span>
+            </div>
+            <p style="font-size: 0.88rem; margin-bottom: 1.2rem;">
+              Smart Emergency Blood & Healthcare Community Response Platform. Connecting donors and emergency centers instantly.
+            </p>
+            <div class="flex gap-3">
+              <a href="#" class="btn btn-glass btn-icon btn-sm"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#" class="btn btn-glass btn-icon btn-sm"><i class="fa-brands fa-github"></i></a>
+              <a href="#" class="btn btn-glass btn-icon btn-sm"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <h5 style="margin-bottom: 1rem; color: #fff;">Quick Links</h5>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><a href="donor-search.html" class="text-secondary">Find Donors</a></li>
+              <li><a href="request.html" class="text-secondary">Emergency Request</a></li>
+              <li><a href="bloodbanks.html" class="text-secondary">Blood Inventory</a></li>
+              <li><a href="compatibility.html" class="text-secondary">Compatibility Matrix</a></li>
+              <li><a href="chatbot.html" class="text-secondary">AI Health Assistant</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h5 style="margin-bottom: 1rem; color: #fff;">User Portals</h5>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><a href="login.html" class="text-secondary">Donor Login</a></li>
+              <li><a href="login.html" class="text-secondary">Hospital Portal</a></li>
+              <li><a href="login.html" class="text-secondary">Blood Bank Admin</a></li>
+              <li><a href="profile.html" class="text-secondary">Digital QR Card</a></li>
+              <li><a href="dashboard.html" class="text-secondary">Live Dashboard</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h5 style="margin-bottom: 1rem; color: #fff;">Emergency Helpline</h5>
+            <p style="font-size: 0.88rem; margin-bottom: 0.8rem;">24/7 National Emergency Blood Dispatch Hotline:</p>
+            <a href="tel:911" class="btn btn-sos btn-sm" style="width: 100%; margin-bottom: 0.8rem;">
+              <i class="fa-solid fa-phone"></i> CALL 911 / 108
+            </a>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">Toll-free emergency dispatch</span>
+          </div>
+
+        </div>
+
+        <div class="flex justify-between items-center" style="border-top: 1px solid var(--border-glass); padding-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; gap: 1rem;">
+          <div>© 2026 LifeLink AI. Designed with 3D Bio-Vessel Theme. All Rights Reserved.</div>
+          <div class="flex gap-4">
+            <a href="#" class="text-secondary">Privacy Policy</a>
+            <a href="#" class="text-secondary">Terms of Service</a>
+            <a href="#" class="text-secondary">Medical Disclaimer</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- EMERGENCY SOS COUNTDOWN MODAL -->
+  <div id="modal-sos-countdown" class="modal-overlay">
+    <div class="modal-container text-center" style="border-color: #ff1744;">
+      <div style="font-size: 3.5rem; color: #ff1744; margin-bottom: 0.5rem; animation: pulse-sos 1s infinite;">
+        🚨
+      </div>
+      <h2 style="color: #ff1744; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
+      <p style="margin-bottom: 1.5rem;">
+        Broadcasting emergency blood requirement and GPS location to all <b>compatible nearby donors</b>, <b>trauma centers</b>, and <b>emergency response dispatch</b> in:
+      </p>
+
+      <!-- Big Countdown Digits -->
+      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #ff1744; line-height: 1; margin-bottom: 1.5rem;">
+        5
+      </div>
+
+      <div class="flex gap-3 justify-center">
+        <button id="btn-cancel-sos" class="btn btn-secondary btn-lg">
+          <i class="fa-solid fa-xmark"></i> Cancel (False Alarm)
+        </button>
+        <button id="btn-confirm-instant-sos" class="btn btn-sos btn-lg">
+          <i class="fa-solid fa-bolt"></i> Send Instantly Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/donor-search.js"></script>
+  <script src="js/bloodbanks.js"></script>
+
+</body>
+</html>

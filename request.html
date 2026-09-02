@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Blood Request | LifeLink AI</title>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D Canvas Background -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-wrapper">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link">Find Donors</a></li>
+          <li><a href="request.html" class="nav-link active">Request Blood</a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Inventory</a></li>
+          <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Assistant</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+          </button>
+          <button class="btn btn-sos btn-sm btn-sos-trigger">
+            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container" style="padding-top: 110px; padding-bottom: 5rem;">
+      
+      <div class="section-header">
+        <span class="badge badge-crimson"><span class="pulse-dot"></span> EMERGENCY RESPONSE DISPATCH</span>
+        <h2>Post An Emergency Blood Request</h2>
+        <p>Broadcast critical blood requirements instantly to verified donors and hospital networks across India.</p>
+      </div>
+
+      <!-- Main Layout Grid -->
+      <div class="grid grid-cols-2 gap-8 items-start">
+        
+        <!-- Left: Emergency Request Creation Form -->
+        <div class="glass-card" style="padding: 2.2rem;">
+          <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+            <h4><i class="fa-solid fa-heart-pulse text-crimson"></i> Patient Blood Request Form</h4>
+            <span class="badge badge-amber">RAPID BROADCAST</span>
+          </div>
+
+          <form id="form-create-blood-request">
+            
+            <div class="form-group">
+              <label class="form-label">Patient Full Name *</label>
+              <input type="text" name="patientName" class="form-control" placeholder="e.g. Aarav Mehta" required>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="form-group">
+                <label class="form-label">Blood Group Required *</label>
+                <select name="bloodGroup" class="form-select" required>
+                  <option value="O-">O Negative (O-) - Universal</option>
+                  <option value="O+">O Positive (O+)</option>
+                  <option value="A+">A Positive (A+)</option>
+                  <option value="A-">A Negative (A-)</option>
+                  <option value="B+">B Positive (B+)</option>
+                  <option value="B-">B Negative (B-)</option>
+                  <option value="AB+">AB Positive (AB+)</option>
+                  <option value="AB-">AB Negative (AB-)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Units Required (Pints) *</label>
+                <input type="number" name="units" class="form-control" min="1" max="10" value="2" required>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="form-group">
+                <label class="form-label">Hospital / Trauma Center *</label>
+                <input type="text" name="hospital" class="form-control" placeholder="e.g. AIIMS Trauma Center / Tata Memorial" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">State / City *</label>
+                <input type="text" name="city" class="form-control" placeholder="e.g. Mumbai / New Delhi / Bengaluru" required>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="form-group">
+                <label class="form-label">Urgency Level *</label>
+                <select name="urgency" class="form-select" required>
+                  <option value="CRITICAL">🚨 CRITICAL (Within 1 Hour)</option>
+                  <option value="URGENT">⚡ URGENT (Within 4 Hours)</option>
+                  <option value="STANDARD">🕒 STANDARD (Within 24 Hours)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Emergency Contact Phone *</label>
+                <input type="tel" name="contactPhone" class="form-control" placeholder="e.g. +91 98100 11911" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Medical Reason / Doctor's Note</label>
+              <textarea name="requiredFor" class="form-control" rows="3" placeholder="e.g. Emergency Cardiac Surgery, ICU Bed 4, In-charge: Dr. Sharma"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 1rem;">
+              <i class="fa-solid fa-satellite-dish"></i> Broadcast Emergency Alert Now
+            </button>
+
+          </form>
+        </div>
+
+        <!-- Right: Live Active Tracker & Live Feed -->
+        <div class="flex flex-col gap-6">
+          
+          <!-- Live Dispatch Progress Tracker -->
+          <div id="active-request-tracker">
+            <!-- Rendered by request.js -->
+          </div>
+
+          <!-- Live Feed of Pending Emergencies -->
+          <div class="glass-card">
+            <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
+              <h4><i class="fa-solid fa-tower-broadcast text-crimson"></i> Community Emergency Feed</h4>
+              <div class="flex gap-2">
+                <button class="btn btn-sm btn-glass active" data-req-filter="ALL">All</button>
+                <button class="btn btn-sm btn-glass" data-req-filter="CRITICAL">Critical</button>
+              </div>
+            </div>
+
+            <div id="live-requests-feed">
+              <!-- Populated by request.js -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 2.5rem 0; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+      <div class="container">
+        © 2026 LifeLink AI Platform • Rapid Emergency Blood Response
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SOS MODAL -->
+  <div id="modal-sos-countdown" class="modal-overlay">
+    <div class="modal-container text-center" style="border-color: #ff1744;">
+      <div style="font-size: 3.5rem; color: #ff1744; margin-bottom: 0.5rem; animation: pulse-sos 1s infinite;">
+        🚨
+      </div>
+      <h2 style="color: #ff1744; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
+      <p style="margin-bottom: 1.5rem;">
+        Broadcasting emergency blood requirement and GPS location to all <b>compatible nearby donors</b> in:
+      </p>
+      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #ff1744; line-height: 1; margin-bottom: 1.5rem;">
+        5
+      </div>
+      <div class="flex gap-3 justify-center">
+        <button id="btn-cancel-sos" class="btn btn-secondary btn-lg">
+          <i class="fa-solid fa-xmark"></i> Cancel
+        </button>
+        <button id="btn-confirm-instant-sos" class="btn btn-sos btn-lg">
+          <i class="fa-solid fa-bolt"></i> Send Instantly Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/request.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Compatibility Matrix | LifeLink AI</title>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/3d-theme.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Video & Motion Background Backdrop -->
+  <div class="video-bg-container">
+    <video class="video-bg" autoplay muted loop playsinline poster="assets/blood-cells-bg.webp">
+      <source src="assets/blood-cells-motion.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay"></div>
+  </div>
+
+  <!-- 3D Canvas Background -->
+  <div id="threejs-bg-container"></div>
+  <div class="ambient-glow ambient-glow-1"></div>
+  <div class="ambient-glow ambient-glow-2"></div>
+
+  <div class="app-wrapper">
+    
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
+          <span>LifeLink <span class="text-crimson">AI</span></span>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link">Find Donors</a></li>
+          <li><a href="request.html" class="nav-link">Request Blood</a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Inventory</a></li>
+          <li><a href="compatibility.html" class="nav-link active">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Assistant</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+          </button>
+          <button class="btn btn-sos btn-sm btn-sos-trigger">
+            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="container" style="padding-top: 110px; padding-bottom: 5rem;">
+      
+      <div class="section-header">
+        <span class="badge badge-cyan"><i class="fa-solid fa-dna"></i> TRANSFUSION IMMUNOLOGY</span>
+        <h2>Interactive Blood Compatibility Checker</h2>
+        <p>Explore ABO & Rh antigen compatibility between donors and recipients with real-time bio-simulation.</p>
+      </div>
+
+      <!-- Interactive Compatibility Visualizer Selector -->
+      <div class="grid grid-cols-2 gap-8 items-center" style="margin-bottom: 4rem;">
+        
+        <!-- Left: Selectors Card -->
+        <div class="glass-card" style="padding: 2rem;">
+          <h4 style="margin-bottom: 1.5rem;"><i class="fa-solid fa-flask text-crimson"></i> Select Transfusion Pair</h4>
+
+          <div class="form-group">
+            <label class="form-label">Donor Blood Group:</label>
+            <select id="compat-donor-select" class="form-select">
+              <option value="O-">O Negative (O-)</option>
+              <option value="O+">O Positive (O+)</option>
+              <option value="A-">A Negative (A-)</option>
+              <option value="A+">A Positive (A+)</option>
+              <option value="B-">B Negative (B-)</option>
+              <option value="B+">B Positive (B+)</option>
+              <option value="AB-">AB Negative (AB-)</option>
+              <option value="AB+">AB Positive (AB+)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 1.25rem;">
+            <label class="form-label">Recipient Blood Group:</label>
+            <select id="compat-recipient-select" class="form-select">
+              <option value="A+">A Positive (A+)</option>
+              <option value="A-">A Negative (A-)</option>
+              <option value="B+">B Positive (B+)</option>
+              <option value="B-">B Negative (B-)</option>
+              <option value="AB+">AB Positive (AB+)</option>
+              <option value="AB-">AB Negative (AB-)</option>
+              <option value="O+">O Positive (O+)</option>
+              <option value="O-">O Negative (O-)</option>
+            </select>
+          </div>
+
+          <!-- Can Give To / Can Receive From pills -->
+          <div style="margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 1.25rem;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Donor Can Give Red Blood Cells To:</div>
+            <div id="compat-can-give-list" class="flex gap-2" style="flex-wrap: wrap; margin-bottom: 1rem;"></div>
+
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Donor Can Receive From:</div>
+            <div id="compat-can-receive-list" class="flex gap-2" style="flex-wrap: wrap;"></div>
+          </div>
+
+        </div>
+
+        <!-- Right: Real-time Result Output Box -->
+        <div id="compat-result-box">
+          <!-- Populated by compatibility.js -->
+        </div>
+
+      </div>
+
+      <!-- FULL 8x8 COMPATIBILITY MATRIX TABLE -->
+      <div class="glass-card" style="padding: 2rem; overflow-x: auto;">
+        <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+          <div>
+            <h4><i class="fa-solid fa-table-cells text-cyan"></i> Complete 8×8 ABO & Rh Compatibility Table</h4>
+            <p style="font-size: 0.85rem; margin: 0;">Green checkmarks indicate safe donor-to-recipient red blood cell transfusions.</p>
+          </div>
+          <div class="flex gap-3">
+            <span class="badge badge-emerald">✔ Compatible</span>
+            <span class="badge badge-crimson">✕ Incompatible</span>
+          </div>
+        </div>
+
+        <table id="full-compatibility-matrix" class="matrix-table">
+          <!-- Populated by compatibility.js -->
+        </table>
+      </div>
+
+      <!-- Universal Donor & Recipient Spotlight Cards -->
+      <div class="grid grid-cols-2 gap-6" style="margin-top: 3rem;">
+        
+        <div class="glass-card">
+          <div class="flex items-center gap-3" style="margin-bottom: 1rem;">
+            <div class="blood-badge blood-badge-lg">O-</div>
+            <div>
+              <h3>Universal Red Cell Donor (O-)</h3>
+              <span class="badge badge-crimson">CRITICAL IN TRAUMA</span>
+            </div>
+          </div>
+          <p style="font-size: 0.92rem;">
+            O- negative red blood cells have no A, B, or Rh antigens on their surface. This means anyone of any blood group can receive O- blood without immediate risk of immune rejection. It is vital in ambulances and trauma ERs.
+          </p>
+        </div>
+
+        <div class="glass-card">
+          <div class="flex items-center gap-3" style="margin-bottom: 1rem;">
+            <div class="blood-badge blood-badge-lg" style="background: var(--grad-plasma);">AB+</div>
+            <div>
+              <h3>Universal Recipient (AB+)</h3>
+              <span class="badge badge-cyan">UNIVERSAL RECEIVER</span>
+            </div>
+          </div>
+          <p style="font-size: 0.92rem;">
+            AB+ individuals have both A, B, and Rh antigens present on their red cells. Therefore, their immune plasma does not carry anti-A, anti-B, or anti-Rh antibodies, allowing them to safely receive red blood cells from any blood group!
+          </p>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 2.5rem 0; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
+      <div class="container">
+        © 2026 LifeLink AI Platform • Transfusion Medicine Module
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/3d-blood-vase.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/compatibility.js"></script>
+
+</body>
+</html>
