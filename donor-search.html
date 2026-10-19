@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Find Donors | LifeLink AI Smart Matcher</title>
+  <title>Find Verified Blood Donors | LifeLink Emergency Network</title>
 
   <!-- FontAwesome & Leaflet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,31 +33,45 @@
 
   <div class="app-wrapper">
     
-    <!-- Navbar -->
+    <!-- Main Navigation Bar -->
     <nav class="navbar">
       <div class="nav-container">
         <a href="index.html" class="nav-brand">
-          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
-          <span>LifeLink <span class="text-crimson">AI</span></span>
+          <div class="brand-icon"><i class="fa-solid fa-square-plus"></i></div>
+          <div class="flex flex-col">
+            <span style="line-height: 1.1;">LifeLink <span class="text-crimson">Care</span></span>
+            <span style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Blood Emergency Network</span>
+          </div>
         </a>
 
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="donor-search.html" class="nav-link active">Find Donors</a></li>
-          <li><a href="request.html" class="nav-link">Request Blood</a></li>
-          <li><a href="bloodbanks.html" class="nav-link">Inventory</a></li>
+          <li><a href="donor-search.html" class="nav-link active">Find Blood</a></li>
+          <li><a href="register.html" class="nav-link">Donate Blood</a></li>
+          <li><a href="request.html" class="nav-link">Emergency Requests <span class="badge badge-crimson" style="padding: 0.15rem 0.45rem; font-size: 0.65rem;">LIVE</span></a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Hospitals & Banks</a></li>
           <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
-          <li><a href="chatbot.html" class="nav-link">AI Assistant</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Doctor</a></li>
           <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
         </ul>
 
         <div class="nav-actions">
-          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+          <select id="lang-selector" class="form-select" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.82rem; border-radius: var(--radius-full);">
+            <option value="en">🇺🇸 EN</option>
+            <option value="hi">🇮🇳 हिंदी</option>
+            <option value="mr">🇮🇳 मराठी</option>
+            <option value="es">🇪🇸 ES</option>
+          </select>
+
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Calm Healthcare Light/Dark Mode">
             <i class="fa-solid fa-sun theme-toggle-icon"></i>
           </button>
           <button class="btn btn-sos btn-sm btn-sos-trigger">
             <i class="fa-solid fa-triangle-exclamation"></i> SOS
           </button>
+          <a href="login.html" class="btn btn-secondary btn-sm flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+          </a>
         </div>
       </div>
     </nav>
@@ -66,14 +80,27 @@
     <main class="container" style="padding-top: 110px; padding-bottom: 5rem;">
       
       <!-- Section Header -->
-      <div class="section-header" style="margin-bottom: 2.5rem;">
-        <span class="badge badge-cyan"><i class="fa-solid fa-brain"></i> AI PROXIMITY & COMPATIBILITY MATCH</span>
-        <h2>Find Verified Blood Donors Across India</h2>
-        <p>Our intelligent AI matching engine ranks donors based on blood compatibility, GPS distance, response reliability, and donation intervals.</p>
+      <div class="section-header" style="margin-bottom: 2rem;">
+        <span class="badge badge-cyan"><i class="fa-solid fa-crosshairs"></i> CLINICAL COMPATIBILITY & GPS MATCH</span>
+        <h2>Find Verified Voluntary Blood Donors Across India</h2>
+        <p>Our intelligent healthcare engine ranks donors based on exact ABO/Rh compatibility, distance radius, last donation safety interval, and verified response rate.</p>
+      </div>
+
+      <!-- Quick Blood Group Filter Chips -->
+      <div class="flex gap-2 justify-center" style="flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='ALL'; document.getElementById('btn-apply-filters').click();">All Types</button>
+        <button class="btn btn-sm btn-glass text-crimson" style="font-weight: 800;" onclick="document.getElementById('search-blood-group').value='O-'; document.getElementById('btn-apply-filters').click();">O- Universal</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='O+'; document.getElementById('btn-apply-filters').click();">O+</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='A+'; document.getElementById('btn-apply-filters').click();">A+</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='A-'; document.getElementById('btn-apply-filters').click();">A-</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='B+'; document.getElementById('btn-apply-filters').click();">B+</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='B-'; document.getElementById('btn-apply-filters').click();">B-</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='AB+'; document.getElementById('btn-apply-filters').click();">AB+</button>
+        <button class="btn btn-sm btn-glass" onclick="document.getElementById('search-blood-group').value='AB-'; document.getElementById('btn-apply-filters').click();">AB-</button>
       </div>
 
       <!-- Search Filter Panel -->
-      <div class="glass-card" style="margin-bottom: 2.5rem; padding: 2rem;">
+      <div class="glass-card" style="margin-bottom: 2.5rem; padding: 1.75rem;">
         <div class="grid grid-cols-4 gap-4 items-center">
           
           <!-- Blood Group -->
@@ -122,7 +149,7 @@
           <!-- Availability Check & Apply -->
           <div class="flex items-center gap-4" style="margin-top: 1.2rem;">
             <label class="flex items-center gap-2" style="font-size: 0.88rem; cursor: pointer;">
-              <input type="checkbox" id="filter-available-only" checked style="width: 18px; height: 18px; accent-color: var(--primary-500);">
+              <input type="checkbox" id="filter-available-only" checked style="width: 18px; height: 18px; accent-color: var(--color-primary);">
               <span>Available Only</span>
             </label>
             <button id="btn-apply-filters" class="btn btn-primary btn-sm flex-1">
@@ -153,13 +180,13 @@
           <div class="glass-card" style="padding: 1.5rem; position: sticky; top: 96px;">
             <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
               <h4><i class="fa-solid fa-location-crosshairs text-crimson"></i> Live GPS Radar</h4>
-              <span class="badge badge-cyan"><span class="pulse-dot"></span> LIVE PINS</span>
+              <span class="badge badge-cyan"><span class="pulse-dot"></span> LIVE NETWORK</span>
             </div>
             
-            <div id="map-container" style="height: 440px; border-radius: var(--radius-md);"></div>
+            <div id="map-container" style="height: 460px; border-radius: var(--radius-md);"></div>
             
-            <div style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--text-muted);">
-              <i class="fa-solid fa-circle-info text-cyan"></i> Red markers represent active verified donors ready for emergency contact. Click any marker to view distance and direct request.
+            <div style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.45;">
+              <i class="fa-solid fa-circle-info text-cyan"></i> Markers show verified donors (green), trauma centers (blue), and blood banks (amber). Click any marker to view distance and direct request.
             </div>
           </div>
         </div>
@@ -171,10 +198,43 @@
     <!-- Footer -->
     <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 2.5rem 0; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
       <div class="container">
-        © 2026 LifeLink AI Platform • 3D Bio-Vessel Emergency Network
+        © 2026 LifeLink Care Network • National Blood Donation & Emergency Response Network
       </div>
     </footer>
 
+  </div>
+
+  <!-- PERSISTENT FLOATING EMERGENCY BUTTON -->
+  <button class="persistent-emergency-btn btn-sos-trigger" id="btn-floating-emergency" title="Emergency Blood Request Broadcast">
+    <span class="emergency-pulse-ring"></span>
+    <i class="fa-solid fa-droplet"></i>
+    <span>REQUEST BLOOD NOW</span>
+  </button>
+
+  <!-- EMERGENCY SOS COUNTDOWN & TRIAGE MODAL -->
+  <div id="modal-sos-countdown" class="modal-overlay">
+    <div class="modal-container text-center" style="border-color: #dc2626; max-width: 520px;">
+      <div style="font-size: 3.5rem; color: #dc2626; margin-bottom: 0.5rem; animation: emergency-ring 1.5s infinite;">
+        🚨
+      </div>
+      <h2 style="color: #dc2626; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+        Broadcasting emergency blood requirement and GPS coordinates to all <b>compatible nearby donors</b>, <b>trauma centers</b>, and <b>emergency response dispatch</b> in:
+      </p>
+
+      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #dc2626; line-height: 1; margin-bottom: 1.5rem;">
+        5
+      </div>
+
+      <div class="flex gap-3 justify-center">
+        <button id="btn-cancel-sos" class="btn btn-secondary btn-lg">
+          <i class="fa-solid fa-xmark"></i> Cancel (False Alarm)
+        </button>
+        <button id="btn-confirm-instant-sos" class="btn btn-sos btn-lg">
+          <i class="fa-solid fa-bolt"></i> Send Instantly Now
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->

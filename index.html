@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LifeLink AI | Smart Emergency Blood & Community Response Platform</title>
+  <title>LifeLink | National Blood Donation & Emergency Response Network</title>
   
-  <!-- Meta SEO & PWA -->
-  <meta name="description" content="LifeLink AI connects blood donors, recipients, hospitals, and emergency responders in real-time with AI matching and 3D medical visualizers.">
-  <meta name="theme-color" content="#e53935">
+  <!-- Meta SEO & Healthcare PWA -->
+  <meta name="description" content="LifeLink connects patients, voluntary blood donors, hospital trauma centers, and blood banks during emergencies with real-time GPS routing and verified clinical matching.">
+  <meta name="theme-color" content="#d62828">
 
   <!-- FontAwesome & Leaflet CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,7 +30,7 @@
     <div class="video-bg-overlay"></div>
   </div>
 
-  <!-- 3D WebGL Three.js Background Canvas (Blood Dropping from Glass Vase) -->
+  <!-- 3D Canvas Background Container -->
   <div id="threejs-bg-container"></div>
   <div class="ambient-glow ambient-glow-1"></div>
   <div class="ambient-glow ambient-glow-2"></div>
@@ -38,12 +38,12 @@
   <!-- App Wrapper -->
   <div class="app-wrapper">
 
-    <!-- Emergency Broadcast Live Ticker -->
+    <!-- Global Emergency Broadcast Live Ticker -->
     <div class="emergency-ticker">
       <div class="container flex justify-between items-center" style="padding: 0 1rem;">
-        <div class="ticker-content">
-          <span class="badge badge-crimson" style="background: rgba(255,255,255,0.2); color: #fff;">
-            <i class="fa-solid fa-satellite-dish"></i> LIVE ALERT
+        <div class="ticker-content flex items-center gap-3">
+          <span class="badge badge-crimson" style="background: rgba(255,255,255,0.25); color: #fff; border: 1px solid rgba(255,255,255,0.4);">
+            <i class="fa-solid fa-tower-broadcast"></i> LIVE EMERGENCY NETWORK
           </span>
           <div class="ticker-item">
             <span>🚨 <b>Critical Request:</b> O- Negative required at AIIMS Apex Trauma Center, New Delhi (ICU Bed 4) • 3 Units Needed</span>
@@ -51,35 +51,39 @@
             <span>⚡ <b>Active Donors Nearby:</b> 28 Ready across Mumbai, Delhi & Bengaluru • Average Dispatch: 11 Mins</span>
           </div>
         </div>
-        <a href="request.html" class="btn btn-sm btn-glass" style="background: rgba(255,255,255,0.15); color: #fff; border: none; padding: 0.25rem 0.75rem; font-size: 0.78rem;">
-          View Requests →
+        <a href="request.html" class="btn btn-sm btn-glass" style="background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 0.25rem 0.75rem; font-size: 0.78rem;">
+          View Live Feed →
         </a>
       </div>
     </div>
 
-    <!-- Navigation Bar -->
+    <!-- Main Navigation Bar -->
     <nav class="navbar">
       <div class="nav-container">
         <a href="index.html" class="nav-brand">
           <div class="brand-icon">
-            <i class="fa-solid fa-droplet"></i>
+            <i class="fa-solid fa-square-plus"></i>
           </div>
-          <span>LifeLink <span class="text-crimson">AI</span></span>
+          <div class="flex flex-col">
+            <span style="line-height: 1.1;">LifeLink <span class="text-crimson">Care</span></span>
+            <span style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Blood Emergency Network</span>
+          </div>
         </a>
 
         <ul class="nav-links">
-          <li><a href="index.html" class="nav-link active" data-i18n="nav_home">Home</a></li>
-          <li><a href="donor-search.html" class="nav-link" data-i18n="nav_search">Find Donors</a></li>
-          <li><a href="request.html" class="nav-link" data-i18n="nav_request">Request Blood</a></li>
-          <li><a href="bloodbanks.html" class="nav-link" data-i18n="nav_inventory">Hospitals & Banks</a></li>
-          <li><a href="compatibility.html" class="nav-link" data-i18n="nav_compatibility">Compatibility</a></li>
-          <li><a href="chatbot.html" class="nav-link" data-i18n="nav_ai_bot">AI Assistant</a></li>
-          <li><a href="dashboard.html" class="nav-link" data-i18n="nav_dashboard">Dashboard</a></li>
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="donor-search.html" class="nav-link">Find Blood</a></li>
+          <li><a href="register.html" class="nav-link">Donate Blood</a></li>
+          <li><a href="request.html" class="nav-link">Emergency Requests <span class="badge badge-crimson" style="padding: 0.15rem 0.45rem; font-size: 0.65rem;">LIVE</span></a></li>
+          <li><a href="bloodbanks.html" class="nav-link">Hospitals & Banks</a></li>
+          <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Doctor</a></li>
+          <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
         </ul>
 
         <div class="nav-actions">
           <!-- Multi-language Select -->
-          <select id="lang-selector" class="form-select" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: var(--radius-full);">
+          <select id="lang-selector" class="form-select" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.82rem; border-radius: var(--radius-full);">
             <option value="en">🇺🇸 EN</option>
             <option value="hi">🇮🇳 हिंदी</option>
             <option value="mr">🇮🇳 मराठी</option>
@@ -87,17 +91,17 @@
           </select>
 
           <!-- Theme Toggle -->
-          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Dark/Light Mode">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Calm Healthcare Light/Dark Mode">
             <i class="fa-solid fa-sun theme-toggle-icon"></i>
           </button>
 
           <!-- Emergency SOS Quick Button -->
-          <button id="btn-trigger-sos" class="btn btn-sos btn-sm">
+          <button class="btn btn-sos btn-sm btn-sos-trigger" title="Trigger Instant Emergency SOS">
             <i class="fa-solid fa-triangle-exclamation"></i> SOS
           </button>
 
-          <!-- Sign In / Dashboard CTA -->
-          <a href="login.html" class="btn btn-primary btn-sm">
+          <!-- Sign In / User Portal -->
+          <a href="login.html" class="btn btn-secondary btn-sm flex items-center gap-2">
             <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
           </a>
 
@@ -110,125 +114,184 @@
     </nav>
 
     <!-- Main Content Area -->
-    <main style="padding-top: 100px;">
+    <main style="padding-top: 110px;">
 
-      <!-- HERO SECTION -->
-      <section class="container" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+      <!-- ==========================================================================
+           SECTION 1: HERO - "Find Blood When Every Minute Matters"
+           ========================================================================== -->
+      <section class="container" style="padding-top: 2rem; padding-bottom: 4.5rem;">
         <div class="grid grid-cols-2 items-center gap-8">
           
-          <!-- Hero Text Content -->
+          <!-- Hero Text Content & Quick Search Command -->
           <div>
             <div class="badge badge-crimson" style="margin-bottom: 1.25rem;">
-              <span class="pulse-dot"></span> SMART EMERGENCY RESPONSE 2.0
+              <span class="emergency-pulse-ring"></span> 24/7 VERIFIED EMERGENCY RESPONSE
             </div>
             
-            <h1 style="margin-bottom: 1.2rem;">
-              Connecting Donors. <br/>
-              <span class="text-gradient">Saving Lives Instantly</span> <br/>
-              With Medical AI.
+            <h1 style="margin-bottom: 1.2rem; line-height: 1.15;">
+              Find Blood When <br/>
+              <span class="text-crimson">Every Minute Matters.</span>
             </h1>
 
-            <p style="font-size: 1.15rem; margin-bottom: 2rem; max-width: 540px;" data-i18n="hero_desc">
-              LifeLink AI connects critical patients, voluntary blood donors, hospital trauma centers, and blood banks in real time using 3D visual matching and intelligent GPS routing.
+            <p style="font-size: 1.15rem; margin-bottom: 2rem; max-width: 540px; color: var(--text-secondary);">
+              Connect with verified voluntary donors, hospital trauma centers, and regional blood banks during critical medical emergencies across India.
             </p>
 
             <div class="flex gap-4 items-center" style="flex-wrap: wrap;">
+              <a href="request.html" class="btn btn-primary btn-lg" style="background: var(--color-primary); border-color: var(--color-primary);">
+                <i class="fa-solid fa-droplet"></i> Request Blood
+              </a>
+              <a href="register.html" class="btn btn-secondary btn-lg">
+                <i class="fa-solid fa-hand-holding-heart text-crimson"></i> Become A Donor
+              </a>
               <button class="btn btn-sos btn-lg btn-sos-trigger">
                 <i class="fa-solid fa-bolt"></i> EMERGENCY SOS
               </button>
-              <a href="donor-search.html" class="btn btn-primary btn-lg" data-i18n="btn_find_donor">
-                <i class="fa-solid fa-magnifying-glass"></i> Find Donors
-              </a>
-              <a href="register.html" class="btn btn-glass btn-lg" data-i18n="btn_donate">
-                <i class="fa-solid fa-hand-holding-heart"></i> Become a Donor
-              </a>
+            </div>
+
+            <!-- Hero Instant Command Search Bar -->
+            <div class="hero-command-card">
+              <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.8rem; letter-spacing: 0.05em;">
+                <i class="fa-solid fa-magnifying-glass text-crimson"></i> Quick Blood & Donor Finder:
+              </div>
+              <div class="command-bar-grid">
+                <div>
+                  <label class="form-label" style="font-size: 0.78rem;">Blood Group:</label>
+                  <select id="quick-blood-select" class="form-select" style="padding: 0.6rem 0.85rem; font-size: 0.9rem;">
+                    <option value="O-">O Negative (O-) - Universal</option>
+                    <option value="O+">O Positive (O+)</option>
+                    <option value="A+">A Positive (A+)</option>
+                    <option value="A-">A Negative (A-)</option>
+                    <option value="B+">B Positive (B+)</option>
+                    <option value="B-">B Negative (B-)</option>
+                    <option value="AB+">AB Positive (AB+)</option>
+                    <option value="AB-">AB Negative (AB-)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.78rem;">State / City (India):</label>
+                  <select id="quick-city-select" class="form-select" style="padding: 0.6rem 0.85rem; font-size: 0.9rem;">
+                    <option value="Mumbai">Mumbai (Maharashtra)</option>
+                    <option value="New Delhi">New Delhi (Delhi NCR)</option>
+                    <option value="Bengaluru">Bengaluru (Karnataka)</option>
+                    <option value="Pune">Pune (Maharashtra)</option>
+                    <option value="Chennai">Chennai (Tamil Nadu)</option>
+                    <option value="Kolkata">Kolkata (West Bengal)</option>
+                    <option value="Hyderabad">Hyderabad (Telangana)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.78rem; opacity: 0;">Action</label>
+                  <button id="btn-hero-quick-search" class="btn btn-primary" style="width: 100%; padding: 0.65rem 1.2rem;">
+                    Match Donors →
+                  </button>
+                </div>
+              </div>
             </div>
 
             <!-- Quick Trust Metric Row -->
-            <div class="flex items-center gap-6" style="margin-top: 2.8rem; border-top: 1px solid var(--border-glass); padding-top: 1.5rem;">
+            <div class="flex items-center gap-6" style="margin-top: 2rem; border-top: 1px solid var(--border-glass); padding-top: 1.25rem;">
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-shield-halved text-emerald fa-xl"></i>
                 <div>
-                  <div style="font-weight: 700; font-size: 0.95rem;">100% Verified</div>
+                  <div style="font-weight: 700; font-size: 0.92rem;">100% Verified</div>
                   <div style="font-size: 0.78rem; color: var(--text-muted);">Hospital Certified</div>
                 </div>
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-bolt text-cyan fa-xl"></i>
                 <div>
-                  <div style="font-weight: 700; font-size: 0.95rem;">&lt; 15 Mins</div>
+                  <div style="font-weight: 700; font-size: 0.92rem;">&lt; 15 Mins</div>
                   <div style="font-size: 0.78rem; color: var(--text-muted);">Avg Alert Response</div>
                 </div>
               </div>
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-lock text-amber fa-xl"></i>
                 <div>
-                  <div style="font-weight: 700; font-size: 0.95rem;">HIPAA Safe</div>
+                  <div style="font-weight: 700; font-size: 0.92rem;">HIPAA & DPDP</div>
                   <div style="font-size: 0.78rem; color: var(--text-muted);">Encrypted Records</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Hero 3D Glass Flask Interactive Preview Card -->
+          <!-- Hero Visual: Real-World Blood Donation Ecosystem -->
           <div>
-            <div class="glass-card glass-card-hero" style="padding: 2.2rem; position: relative;">
+            <div class="ecosystem-container">
               
-              <!-- Card Top Header -->
-              <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+              <div class="ecosystem-header">
                 <div>
-                  <span class="badge badge-cyan">3D BIO-VESSEL TELEMETRY</span>
-                  <h3 style="margin-top: 0.3rem;">Universal Donor O-</h3>
+                  <span class="badge badge-crimson"><i class="fa-solid fa-heart-pulse"></i> LIVE ECOSYSTEM</span>
+                  <h3 style="margin-top: 0.4rem; font-size: 1.35rem;">Real-Time Medical Network</h3>
                 </div>
-                <div class="pulse-dot emerald"></div>
+                <div class="flex items-center gap-2">
+                  <span class="pulse-dot emerald"></span>
+                  <span style="font-size: 0.8rem; font-weight: 700; color: var(--accent-emerald);">CONNECTED</span>
+                </div>
               </div>
 
-              <!-- Interactive Blood Drop Graphic Illustration / Stage -->
-              <div class="glass-vase-stage">
-                <div class="glass-vase-glow"></div>
+              <!-- 4 Connected Nodes of the Medical Ecosystem -->
+              <div class="ecosystem-grid">
                 
-                <!-- SVG Anatomical Flask Overlay -->
-                <svg class="glass-vial-graphic" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Glass Contours -->
-                  <path d="M70 20 H130 V60 L170 170 C180 200 160 220 100 220 C40 220 20 200 30 170 L70 60 Z" 
-                        stroke="rgba(255,255,255,0.4)" stroke-width="3" fill="rgba(255,255,255,0.03)"/>
-                  <!-- Fluid Level Inside -->
-                  <path d="M42 160 C70 150 130 170 158 160 L168 180 C175 205 155 215 100 215 C45 215 25 205 32 180 Z" 
-                        fill="url(#bloodGrad)" opacity="0.85"/>
-                  <!-- Droplet falling inside -->
-                  <path d="M100 80 C95 90 90 100 90 110 C90 118 95 125 100 125 C105 125 110 118 110 110 C110 100 105 90 100 80 Z" 
-                        fill="#ff1744">
-                    <animateTransform attributeName="transform" type="translate" values="0,0; 0,60; 0,0" dur="2s" repeatCount="indefinite"/>
-                  </path>
-                  <defs>
-                    <linearGradient id="bloodGrad" x1="100" y1="150" x2="100" y2="220" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#ff1744"/>
-                      <stop offset="0.6" stop-color="#d50000"/>
-                      <stop offset="1" stop-color="#4a0007"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                <div style="position: absolute; bottom: 1.5rem; text-align: center; width: 100%;">
-                  <span class="badge badge-emerald">REAL-TIME FLUID PURITY: 99.8%</span>
+                <!-- Node 1: Patient In Need -->
+                <div class="ecosystem-node">
+                  <div class="ecosystem-icon-wrapper patient">
+                    <i class="fa-solid fa-bed-pulse"></i>
+                  </div>
+                  <div>
+                    <div class="ecosystem-node-title">1. Patient In Need</div>
+                    <div class="ecosystem-node-desc">Critical trauma or surgery requirement broadcasted instantly with location.</div>
+                    <span class="badge badge-crimson" style="margin-top: 0.5rem; font-size: 0.68rem;">🚨 EMERGENCY DISPATCH</span>
+                  </div>
                 </div>
+
+                <!-- Node 2: Voluntary Donor -->
+                <div class="ecosystem-node">
+                  <div class="ecosystem-icon-wrapper donor">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                  </div>
+                  <div>
+                    <div class="ecosystem-node-title">2. Verified Donor</div>
+                    <div class="ecosystem-node-desc">Compatible nearby donors receive geo-targeted mobile alerts within 5km.</div>
+                    <span class="badge badge-emerald" style="margin-top: 0.5rem; font-size: 0.68rem;">✔ 1-TAP ACCEPT</span>
+                  </div>
+                </div>
+
+                <!-- Node 3: Hospital Trauma Center -->
+                <div class="ecosystem-node">
+                  <div class="ecosystem-icon-wrapper hospital">
+                    <i class="fa-solid fa-hospital"></i>
+                  </div>
+                  <div>
+                    <div class="ecosystem-node-title">3. Hospital Center</div>
+                    <div class="ecosystem-node-desc">Attending doctors verify requisition, allocate bed, and prepare cross-match.</div>
+                    <span class="badge badge-cyan" style="margin-top: 0.5rem; font-size: 0.68rem;">🏥 AIIMS / APOLLO</span>
+                  </div>
+                </div>
+
+                <!-- Node 4: Regional Blood Bank -->
+                <div class="ecosystem-node">
+                  <div class="ecosystem-icon-wrapper bloodbank">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                  </div>
+                  <div>
+                    <div class="ecosystem-node-title">4. Blood Bank Reserve</div>
+                    <div class="ecosystem-node-desc">Cold-chain tracked bio-stock inventory mobilized for rapid delivery.</div>
+                    <span class="badge badge-amber" style="margin-top: 0.5rem; font-size: 0.68rem;">❄ COLD CHAIN ACTIVE</span>
+                  </div>
+                </div>
+
               </div>
 
-              <!-- Quick Mini Matcher Inside Hero Card -->
-              <div style="background: var(--bg-surface-elevated); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
-                <div class="flex justify-between items-center" style="font-size: 0.88rem; margin-bottom: 0.5rem;">
-                  <span class="text-secondary">Instant Blood Match Filter:</span>
-                  <span class="text-cyan" style="font-weight: 700;">8 Types Ready</span>
+              <!-- Real-Time Telemetry Bar Inside Visual -->
+              <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: var(--bg-surface-elevated); border-radius: var(--radius-md); border: 1px solid var(--border-glass);" class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-satellite-dish text-crimson"></i>
+                  <span style="font-size: 0.85rem; color: var(--text-secondary);">Active Telemetry Stream:</span>
                 </div>
-                <div class="flex gap-2" style="flex-wrap: wrap;">
-                  <button class="blood-badge blood-badge-sm" data-select-blood="O-" data-select-type="donor">O-</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="O+" data-select-type="donor">O+</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="A+" data-select-type="donor">A+</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="A-" data-select-type="donor">A-</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="B+" data-select-type="donor">B+</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="B-" data-select-type="donor">B-</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="AB+" data-select-type="donor">AB+</button>
-                  <button class="blood-badge blood-badge-sm" data-select-blood="AB-" data-select-type="donor">AB-</button>
+                <div class="flex items-center gap-2">
+                  <span class="badge badge-emerald" style="font-size: 0.72rem;">99.4% DISPATCH RELIABILITY</span>
+                  <span class="badge badge-cyan" style="font-size: 0.72rem;">&lt; 11 MIN ARRIVAL</span>
                 </div>
               </div>
 
@@ -238,48 +301,117 @@
         </div>
       </section>
 
-      <!-- ANIMATED STATS SECTION -->
-      <section style="background: var(--bg-surface); border-y: 1px solid var(--border-glass); padding: 3.5rem 0;">
+      <!-- ==========================================================================
+           SECTION 2: TRUSTED BY MEDICAL INSTITUTIONS & HOSPITALS
+           ========================================================================== -->
+      <section class="trusted-institutions-bar">
         <div class="container">
-          <div class="grid grid-cols-4">
-            
-            <div class="glass-card stat-card">
-              <div class="stat-icon crimson">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <div>
-                <div class="stat-number counter-value" data-target="24850" data-suffix="+">0</div>
-                <div class="stat-label" data-i18n="stat_donors">Active Donors</div>
-              </div>
+          <div style="text-align: center; margin-bottom: 1.5rem;">
+            <span style="font-size: 0.78rem; font-weight: 800; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase;">
+              TRUSTED BY LEADING HOSPITALS, BLOOD TRANSFUSION COUNCILS & HEALTHCARE PARTNERS
+            </span>
+          </div>
+          
+          <div class="trust-badges-wrap">
+            <div class="trust-partner-pill">
+              <i class="fa-solid fa-hospital-user text-crimson"></i>
+              <span>AIIMS Apex Trauma Center</span>
             </div>
+            <div class="trust-partner-pill">
+              <i class="fa-solid fa-square-h text-cyan"></i>
+              <span>Tata Memorial Hospital</span>
+            </div>
+            <div class="trust-partner-pill">
+              <i class="fa-solid fa-plus-minus text-emerald"></i>
+              <span>Apollo Hospitals Healthcare</span>
+            </div>
+            <div class="trust-partner-pill">
+              <i class="fa-solid fa-shield-halved text-crimson"></i>
+              <span>Indian Red Cross Society</span>
+            </div>
+            <div class="trust-partner-pill">
+              <i class="fa-solid fa-building-columns text-amber"></i>
+              <span>National Blood Transfusion Council (NBTC)</span>
+            </div>
+            <div class="trust-partner-pill">
+              <i class="fa-solid fa-certificate text-purple"></i>
+              <span>NABH Accredited & CDSCO Compliant</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div class="glass-card stat-card">
-              <div class="stat-icon emerald">
+      <!-- ==========================================================================
+           SECTION 3: LIVE IMPACT STATISTICS (Animated Counters)
+           ========================================================================== -->
+      <section style="background: var(--bg-surface); border-bottom: 1px solid var(--border-glass); padding: 4rem 0;">
+        <div class="container">
+          
+          <div class="section-header" style="margin-bottom: 2.5rem;">
+            <span class="badge badge-crimson">TRANSPARENT HEALTHCARE TELEMETRY</span>
+            <h2>Our Verified Clinical Impact Across India</h2>
+            <p>Every second counts. Here is how voluntary donors and hospital partners are saving lives right now.</p>
+          </div>
+
+          <div class="grid grid-cols-6 gap-4" style="grid-template-columns: repeat(6, 1fr);">
+            
+            <div class="glass-card stat-card" style="padding: 1.5rem 1.25rem;">
+              <div class="stat-icon crimson">
                 <i class="fa-solid fa-heart-pulse"></i>
               </div>
               <div>
                 <div class="stat-number counter-value" data-target="58420" data-suffix="+">0</div>
-                <div class="stat-label" data-i18n="stat_lives">Lives Saved</div>
+                <div class="stat-label">Lives Saved</div>
               </div>
             </div>
 
-            <div class="glass-card stat-card">
+            <div class="glass-card stat-card" style="padding: 1.5rem 1.25rem;">
+              <div class="stat-icon emerald">
+                <i class="fa-solid fa-droplet"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="24850" data-suffix="+">0</div>
+                <div class="stat-label">Units Donated</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card" style="padding: 1.5rem 1.25rem;">
               <div class="stat-icon cyan">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="18400" data-suffix="+">0</div>
+                <div class="stat-label">Active Donors</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card" style="padding: 1.5rem 1.25rem;">
+              <div class="stat-icon amber">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <div>
+                <div class="stat-number counter-value" data-target="14290" data-suffix="+">0</div>
+                <div class="stat-label">Requests Fulfilled</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card" style="padding: 1.5rem 1.25rem;">
+              <div class="stat-icon crimson">
                 <i class="fa-solid fa-hospital"></i>
               </div>
               <div>
                 <div class="stat-number counter-value" data-target="420" data-suffix="+">0</div>
-                <div class="stat-label" data-i18n="stat_hospitals">Partner Hospitals</div>
+                <div class="stat-label">Partner Hospitals</div>
               </div>
             </div>
 
-            <div class="glass-card stat-card">
-              <div class="stat-icon amber">
-                <i class="fa-solid fa-stopwatch"></i>
+            <div class="glass-card stat-card" style="padding: 1.5rem 1.25rem;">
+              <div class="stat-icon emerald">
+                <i class="fa-solid fa-boxes-stacked"></i>
               </div>
               <div>
-                <div class="stat-number counter-value" data-target="11" data-suffix="m">0</div>
-                <div class="stat-label" data-i18n="stat_response">Avg Response Time</div>
+                <div class="stat-number counter-value" data-target="165" data-suffix="+">0</div>
+                <div class="stat-label">Active Blood Banks</div>
               </div>
             </div>
 
@@ -287,157 +419,437 @@
         </div>
       </section>
 
-      <!-- LIVE RADAR DONOR SEARCH & MAP SECTION -->
+      <!-- ==========================================================================
+           SECTION 4: HOW LIFELINK WORKS (6-Step Clinical Timeline)
+           ========================================================================== -->
       <section class="container" style="padding: 5rem 1.5rem;">
         <div class="section-header">
-          <span class="badge badge-cyan"><i class="fa-solid fa-crosshairs"></i> AI GEOLOCATION DISPATCH</span>
-          <h2>Nearby Verified Donors & Emergency Radar</h2>
-          <p>Our AI analyzes distance, historical response rate, and blood group compatibility to rank the fastest available heroes.</p>
+          <span class="badge badge-cyan"><i class="fa-solid fa-arrow-right-arrow-left"></i> SEAMLESS CLINICAL DISPATCH</span>
+          <h2>How LifeLink Saves Lives in 6 Fast Steps</h2>
+          <p>From initial emergency broadcast to bed-side transfusion, our verified protocol eliminates critical bottlenecks.</p>
         </div>
 
-        <div class="grid grid-cols-3 gap-6" style="margin-bottom: 2rem;">
-          <!-- Left 2 Cols: Donors Grid Preview -->
-          <div style="grid-column: span 2;">
-            <div class="flex justify-between items-center" style="margin-bottom: 1.25rem;">
-              <h4 id="matched-donors-count">Loading Available Donors...</h4>
-              <a href="donor-search.html" class="btn btn-outline-crimson btn-sm">
-                Open Full Search & Filters <i class="fa-solid fa-arrow-right"></i>
-              </a>
-            </div>
-            <div id="donors-grid-container" class="grid grid-cols-2 gap-4">
-              <!-- Dynamically populated by donor-search.js -->
-            </div>
+        <div class="clinical-timeline">
+          
+          <!-- Step 1 -->
+          <div class="timeline-step-card">
+            <div class="timeline-step-num">1</div>
+            <div class="timeline-step-title">Patient Requests Blood</div>
+            <div class="timeline-step-desc">Emergency requirements posted by family or hospital with units, urgency, and location.</div>
           </div>
 
-          <!-- Right 1 Col: Radar Map Mini Container -->
-          <div>
-            <div class="glass-card" style="padding: 1.25rem;">
-              <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
-                <h4><i class="fa-solid fa-map-location-dot text-crimson"></i> Live Radar Map</h4>
-                <span class="badge badge-emerald"><span class="pulse-dot emerald"></span> GPS ACTIVE</span>
+          <!-- Step 2 -->
+          <div class="timeline-step-card">
+            <div class="timeline-step-num">2</div>
+            <div class="timeline-step-title">Donors Receive Alert</div>
+            <div class="timeline-step-desc">All compatible donors within 15 km receive instant push notifications with hospital directions.</div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="timeline-step-card">
+            <div class="timeline-step-num">3</div>
+            <div class="timeline-step-title">Hospital Verification</div>
+            <div class="timeline-step-desc">Attending doctors verify medical requisition, patient bed number, and cross-match protocols.</div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="timeline-step-card">
+            <div class="timeline-step-num">4</div>
+            <div class="timeline-step-title">Donor Confirms</div>
+            <div class="timeline-step-desc">Donor confirms availability with 1-tap and receives prioritized hospital parking/reception pass.</div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="timeline-step-card">
+            <div class="timeline-step-num">5</div>
+            <div class="timeline-step-title">Donation Completed</div>
+            <div class="timeline-step-desc">Sterile collection completed under certified supervision; cold-chain blood bag logged.</div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="timeline-step-card">
+            <div class="timeline-step-num" style="background: rgba(22, 163, 74, 0.15); color: #16a34a;">6</div>
+            <div class="timeline-step-title">Life Saved!</div>
+            <div class="timeline-step-desc">Transfusion successful. Donor receives verifiable digital pass and lifetime hero points.</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 5: AVAILABLE BLOOD TYPES (Large 8-Group Interactive Grid)
+           ========================================================================== -->
+      <section style="background: var(--bg-surface); padding: 5rem 0; border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-crimson"><i class="fa-solid fa-dna"></i> LIVE INVENTORY MONITOR</span>
+            <h2>Available Blood Types & Regional Demand</h2>
+            <p>Click any blood group to view active compatible donors, hospital reserve counts, and current shortage alerts.</p>
+          </div>
+
+          <div class="blood-types-grid-8">
+            
+            <!-- O- Universal -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=O-'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">O-</span>
+                <span class="blood-type-status-pill critical">🚨 CRITICAL LOW</span>
               </div>
-              <div id="map-container" style="height: 380px;"></div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: #dc2626; margin-bottom: 0.8rem;">UNIVERSAL RED CELL DONOR</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>28 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-crimson">7 Units (Low)</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span class="text-crimson">Urgent ICU Need</span>
+              </div>
             </div>
+
+            <!-- O+ -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=O+'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">O+</span>
+                <span class="blood-type-status-pill optimal">● OPTIMAL</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">HIGH POPULATION NEED</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>142 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-emerald">52 Units</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span>Steady Demand</span>
+              </div>
+            </div>
+
+            <!-- A+ -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=A+'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">A+</span>
+                <span class="blood-type-status-pill optimal">● OPTIMAL</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">SECOND MOST COMMON</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>94 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-emerald">38 Units</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span>Standard</span>
+              </div>
+            </div>
+
+            <!-- A- -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=A-'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">A-</span>
+                <span class="blood-type-status-pill low">⚡ MODERATE</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-amber); margin-bottom: 0.8rem;">RARE RH-NEGATIVE</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>19 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-amber">9 Units</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span class="text-amber">Moderate Need</span>
+              </div>
+            </div>
+
+            <!-- B+ -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=B+'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">B+</span>
+                <span class="blood-type-status-pill optimal">● OPTIMAL</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">VERY COMMON IN INDIA</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>118 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-emerald">45 Units</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span>High Transfusion Rate</span>
+              </div>
+            </div>
+
+            <!-- B- -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=B-'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">B-</span>
+                <span class="blood-type-status-pill critical">🚨 CRITICAL LOW</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: #dc2626; margin-bottom: 0.8rem;">CRITICAL EMERGENCY NEED</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>14 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-crimson">6 Units</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span class="text-crimson">Urgent Shortage</span>
+              </div>
+            </div>
+
+            <!-- AB+ Universal Recipient -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=AB+'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">AB+</span>
+                <span class="blood-type-status-pill optimal">● OPTIMAL</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: var(--secondary-500); margin-bottom: 0.8rem;">UNIVERSAL RECIPIENT</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>46 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-emerald">24 Units</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span>Plasma Need High</span>
+              </div>
+            </div>
+
+            <!-- AB- -->
+            <div class="blood-type-card" onclick="window.location.href='donor-search.html?bg=AB-'">
+              <div class="blood-type-card-top">
+                <span class="blood-type-symbol">AB-</span>
+                <span class="blood-type-status-pill critical">🚨 RAREST TYPE</span>
+              </div>
+              <div style="font-size: 0.8rem; font-weight: 700; color: #dc2626; margin-bottom: 0.8rem;">LESS THAN 1% OF POPULATION</div>
+              <div class="blood-type-stat-row">
+                <span>Nearby Donors:</span>
+                <span>8 Verified</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Hospital Stock:</span>
+                <span class="text-crimson">3 Units (Emergency)</span>
+              </div>
+              <div class="blood-type-stat-row">
+                <span>Regional Demand:</span>
+                <span class="text-crimson">Very Urgent</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      <!-- FEATURES SHOWCASE -->
+      <!-- ==========================================================================
+           SECTION 6: EMERGENCY BLOOD REQUEST LIVE FEED
+           ========================================================================== -->
+      <section class="container" style="padding: 5rem 1.5rem;">
+        <div class="flex justify-between items-end" style="margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span class="badge badge-crimson"><i class="fa-solid fa-bell"></i> REAL-TIME PATIENT CALLS</span>
+            <h2 style="margin-top: 0.4rem;">Active Emergency Requests Feed</h2>
+            <p style="margin: 0;">Verified patients and trauma centers requiring immediate blood transfusions.</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-sm btn-glass active" data-req-filter="ALL">All Requests</button>
+            <button class="btn btn-sm btn-glass" data-req-filter="CRITICAL">🚨 Critical Only</button>
+            <button class="btn btn-sm btn-glass" data-req-filter="URGENT">⚡ Urgent Only</button>
+          </div>
+        </div>
+
+        <div id="live-requests-feed">
+          <!-- Dynamically populated by request.js -->
+        </div>
+
+        <div class="text-center" style="margin-top: 2rem;">
+          <a href="request.html" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-plus-circle text-crimson"></i> Post An Emergency Blood Request
+          </a>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 7: INTERACTIVE EMERGENCY MAP (Uber-Style Experience)
+           ========================================================================== -->
+      <section class="container" style="padding-bottom: 5rem;">
+        <div class="section-header">
+          <span class="badge badge-cyan"><i class="fa-solid fa-crosshairs"></i> LIVE GEOLOCATION NETWORK</span>
+          <h2>Interactive Emergency Map Experience</h2>
+          <p>Real-time GPS telemetry showing active patients, voluntary donors, trauma centers, and blood banks.</p>
+        </div>
+
+        <div class="map-command-layout">
+          
+          <!-- Floating Legend (Uber Style) -->
+          <div class="map-floating-legend">
+            <div class="legend-item">
+              <span class="legend-icon-dot patient"></span>
+              <span>Patient (SOS Request)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon-dot donor"></span>
+              <span>Verified Donor</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon-dot hospital"></span>
+              <span>Hospital Center</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon-dot bloodbank"></span>
+              <span>Blood Bank</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon-dot volunteer"></span>
+              <span>Volunteer Responder</span>
+            </div>
+          </div>
+
+          <!-- Leaflet Interactive Map Canvas -->
+          <div id="map-container" style="height: 520px; width: 100%;"></div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           SECTION 8: UPCOMING BLOOD DRIVES & COMMUNITY CAMPS
+           ========================================================================== -->
       <section style="background: var(--bg-surface); padding: 5rem 0; border-top: 1px solid var(--border-glass);">
         <div class="container">
           <div class="section-header">
-            <span class="badge badge-crimson">ADVANCED HEALTHCARE PLATFORM</span>
-            <h2 data-i18n="section_features_title">Next-Gen Emergency Medical Network</h2>
-            <p>From smart AI donor triage to digital QR cards and live inventory management, LifeLink AI is built for mission-critical response.</p>
+            <span class="badge badge-emerald"><i class="fa-solid fa-tent"></i> COMMUNITY DRIVES</span>
+            <h2>Upcoming Blood Donation Camps</h2>
+            <p>Join organized community drives, donate safely under certified supervision, and earn hero honors.</p>
           </div>
 
-          <div class="grid grid-cols-3 gap-6">
-            
-            <div class="glass-card">
-              <div class="stat-icon crimson" style="margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-brain"></i>
-              </div>
-              <h4>AI Donor Ranking</h4>
-              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
-                Proprietary scoring engine factoring in exact ABO/Rh compatibility, distance radius, last donation interval, and live availability.
-              </p>
-            </div>
-
-            <div class="glass-card">
-              <div class="stat-icon cyan" style="margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-qrcode"></i>
-              </div>
-              <h4>3D Digital QR Donor ID</h4>
-              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
-                Flippable 3D digital donor card with scannable QR verification, medical emergency contacts, and instant badge downloads.
-              </p>
-            </div>
-
-            <div class="glass-card">
-              <div class="stat-icon emerald" style="margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-satellite-dish"></i>
-              </div>
-              <h4>1-Click SOS Broadcast</h4>
-              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
-                Instant panic emergency dispatcher alerting compatible donors, nearby ambulances, and trauma surgeons within 15 km in under 5 seconds.
-              </p>
-            </div>
-
-            <div class="glass-card">
-              <div class="stat-icon amber" style="margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-boxes-stacked"></i>
-              </div>
-              <h4>Hospital Blood Inventory</h4>
-              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
-                Live inventory tracking across hospitals and regional blood banks with critical shortage thresholds and expiration alerts.
-              </p>
-            </div>
-
-            <div class="glass-card">
-              <div class="stat-icon crimson" style="margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-certificate"></i>
-              </div>
-              <h4>Honor Certificates & Badges</h4>
-              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
-                Gamified rewards, Bronze-to-Legend donor tiers, and verifiable certificates of appreciation printable on demand.
-              </p>
-            </div>
-
-            <div class="glass-card">
-              <div class="stat-icon cyan" style="margin-bottom: 1.25rem;">
-                <i class="fa-solid fa-robot"></i>
-              </div>
-              <h4>AI Medical Assistant</h4>
-              <p style="margin-top: 0.5rem; font-size: 0.92rem;">
-                Instant eligibility triage chatbot answering medical questions about fevers, tattoos, travel, medications, and pre-donation preparation.
-              </p>
-            </div>
-
+          <div id="donation-camps-grid" class="grid grid-cols-2 gap-6">
+            <!-- Populated dynamically by bloodbanks.js -->
           </div>
         </div>
       </section>
 
-      <!-- UPCOMING BLOOD CAMPS -->
+      <!-- ==========================================================================
+           SECTION 9: 3D DIGITAL QR DONOR ID PASS PREVIEW
+           ========================================================================== -->
       <section class="container" style="padding: 5rem 1.5rem;">
-        <div class="section-header">
-          <span class="badge badge-emerald">COMMUNITY IMPACT</span>
-          <h2 data-i18n="section_camps_title">Upcoming Blood Donation Drives</h2>
-          <p>Join organized community camps, earn hero badges, and save lives in your neighborhood.</p>
-        </div>
+        <div class="grid grid-cols-2 items-center gap-8">
+          <div>
+            <span class="badge badge-purple"><i class="fa-solid fa-id-card"></i> BIOMETRIC CREDENTIALS</span>
+            <h2 style="margin-top: 0.5rem; margin-bottom: 1rem;">Your Verified 3D Digital Donor Pass</h2>
+            <p style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+              Every LifeLink donor receives a certified digital donor pass featuring cryptographic QR verification, lifetime donation history, and blood group validation.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-emerald"></i>
+                <span>Instant QR scanning for hospital express admission</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-emerald"></i>
+                <span>Add directly to Apple Wallet & Google Wallet</span>
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-circle-check text-emerald"></i>
+                <span>Printable government-standard Certificate of Appreciation</span>
+              </li>
+            </ul>
+            <a href="profile.html" class="btn btn-primary btn-lg">
+              <i class="fa-solid fa-qrcode"></i> View & Download Your Donor Pass
+            </a>
+          </div>
 
-        <div id="donation-camps-grid" class="grid grid-cols-2 gap-6">
-          <!-- Populated by bloodbanks.js -->
+          <div class="text-center">
+            <div class="donor-card-3d-wrapper" style="margin: 0 auto;">
+              <div class="donor-card-3d">
+                <div id="donor-card-front" class="donor-card-face">
+                  <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                      <i class="fa-solid fa-droplet text-crimson fa-lg"></i>
+                      <span style="font-weight: 800; font-size: 0.95rem; letter-spacing: 0.05em; color: #fff;">LIFELINK DONOR PASS</span>
+                    </div>
+                    <div class="chip-icon"></div>
+                  </div>
+                  <div style="margin: 0.8rem 0;">
+                    <h3 class="card-donor-name text-gradient" style="font-size: 1.45rem; margin-bottom: 0.2rem;">Rohan Deshmukh</h3>
+                    <p class="card-donor-city" style="font-size: 0.85rem; color: #cbd5e1;"><i class="fa-solid fa-location-dot text-crimson"></i> Mumbai, Maharashtra</p>
+                  </div>
+                  <div class="flex justify-between items-end">
+                    <div>
+                      <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">Verified ID</div>
+                      <div class="card-donor-id" style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; color: #fff;">LL-9821</div>
+                    </div>
+                    <div class="text-right">
+                      <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase;">Blood Type</div>
+                      <div class="blood-badge card-donor-blood" style="width: 42px; height: 42px; font-size: 1.1rem;">O-</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+              <i class="fa-solid fa-rotate"></i> Certified Biometric Pass with Dynamic Cryptographic QR
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- FAQ ACCORDION -->
+      <!-- ==========================================================================
+           SECTION 10: FREQUENTLY ASKED QUESTIONS ACCORDION
+           ========================================================================== -->
       <section style="background: var(--bg-surface); padding: 5rem 0; border-top: 1px solid var(--border-glass);">
         <div class="container" style="max-width: 860px;">
           <div class="section-header">
-            <span class="badge badge-cyan">FREQUENTLY ASKED QUESTIONS</span>
-            <h2>Everything You Need To Know</h2>
-            <p>Clear answers to common questions regarding voluntary blood donation and emergency safety.</p>
+            <span class="badge badge-cyan"><i class="fa-solid fa-circle-question"></i> CLINICAL FAQ</span>
+            <h2>Frequently Asked Questions</h2>
+            <p>Clear, medical answers to common questions regarding voluntary blood donation and emergency safety.</p>
           </div>
 
           <div class="flex flex-col gap-4">
-            <div class="glass-card">
-              <h4>❓ How often can I donate blood?</h4>
+            <div class="glass-card" style="padding: 1.5rem;">
+              <h4>❓ How often can an eligible adult donate blood?</h4>
               <p style="margin-top: 0.5rem; font-size: 0.95rem;">
-                Whole blood can be safely donated every <b>56 days (8 weeks)</b>. Platelet donations can be made every 7 days (up to 24 times per year), while plasma can be donated every 28 days.
+                Whole blood can be safely donated every <b>56 days (8 weeks)</b> for healthy individuals. Platelet donations can be made every 7 days (up to 24 times per year), while plasma can be donated every 28 days.
               </p>
             </div>
 
-            <div class="glass-card">
-              <h4>❓ Will donating blood weaken my immune system?</h4>
+            <div class="glass-card" style="padding: 1.5rem;">
+              <h4>❓ Will donating blood weaken my immune system or energy?</h4>
               <p style="margin-top: 0.5rem; font-size: 0.95rem;">
-                No! The average adult body contains 10-12 pints of blood and donates only 1 pint (about 450ml). Your body replaces the fluid plasma within 24 hours and red blood cells within 4-6 weeks.
+                No! The average adult body contains 10-12 pints of blood and donates only 1 pint (about 450ml). Your body replaces the fluid plasma within 24 hours, and red blood cells are fully replenished in 4-6 weeks.
               </p>
             </div>
 
-            <div class="glass-card">
-              <h4>❓ What is the Universal Blood Donor type?</h4>
+            <div class="glass-card" style="padding: 1.5rem;">
+              <h4>❓ Why is O Negative (O-) called the Universal Donor?</h4>
               <p style="margin-top: 0.5rem; font-size: 0.95rem;">
-                <b>O Negative (O-)</b> is the universal red blood cell donor because its red blood cells lack A, B, and Rh antigens, making it safe for any emergency patient regardless of their blood group.
+                <b>O Negative (O-)</b> red blood cells lack A, B, and Rh antigens, meaning any patient's immune system will accept them without adverse reactions. In trauma surgeries where blood typing cannot wait, O- is life-saving.
+              </p>
+            </div>
+
+            <div class="glass-card" style="padding: 1.5rem;">
+              <h4>❓ How is patient and donor personal information protected?</h4>
+              <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                LifeLink complies with HIPAA and the Digital Personal Data Protection (DPDP) Act. All medical notes and phone numbers are encrypted with 256-bit SSL, and emergency dispatches are only routed to certified healthcare centers.
               </p>
             </div>
           </div>
@@ -446,64 +858,66 @@
 
     </main>
 
-    <!-- FOOTER -->
-    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 4rem 0 2rem 0;">
+    <!-- ==========================================================================
+         GLOBAL HEALTHCARE FOOTER WITH 24/7 EMERGENCY HELPLINE
+         ========================================================================== -->
+    <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 4.5rem 0 2rem 0;">
       <div class="container">
-        <div class="grid grid-cols-4 gap-8" style="margin-bottom: 3rem;">
+        <div class="grid grid-cols-4 gap-8" style="margin-bottom: 3.5rem;">
           
           <div style="grid-column: span 1;">
             <div class="nav-brand" style="margin-bottom: 1rem;">
-              <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
-              <span>LifeLink <span class="text-crimson">AI</span></span>
+              <div class="brand-icon"><i class="fa-solid fa-square-plus"></i></div>
+              <span>LifeLink <span class="text-crimson">Care</span></span>
             </div>
-            <p style="font-size: 0.88rem; margin-bottom: 1.2rem;">
-              Smart Emergency Blood & Healthcare Community Response Platform. Connecting donors and emergency centers instantly.
+            <p style="font-size: 0.88rem; margin-bottom: 1.2rem; color: var(--text-secondary);">
+              National Blood Donation & Emergency Medical Response Ecosystem. Connecting patients, voluntary donors, and hospitals 24/7 across India.
             </p>
             <div class="flex gap-3">
-              <a href="#" class="btn btn-glass btn-icon btn-sm"><i class="fa-brands fa-x-twitter"></i></a>
-              <a href="#" class="btn btn-glass btn-icon btn-sm"><i class="fa-brands fa-github"></i></a>
-              <a href="#" class="btn btn-glass btn-icon btn-sm"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="#" class="btn btn-secondary btn-icon btn-sm" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="#" class="btn btn-secondary btn-icon btn-sm" title="GitHub"><i class="fa-brands fa-github"></i></a>
+              <a href="#" class="btn btn-secondary btn-icon btn-sm" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
             </div>
           </div>
 
           <div>
-            <h5 style="margin-bottom: 1rem; color: #fff;">Quick Links</h5>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
-              <li><a href="donor-search.html" class="text-secondary">Find Donors</a></li>
-              <li><a href="request.html" class="text-secondary">Emergency Request</a></li>
-              <li><a href="bloodbanks.html" class="text-secondary">Blood Inventory</a></li>
-              <li><a href="compatibility.html" class="text-secondary">Compatibility Matrix</a></li>
-              <li><a href="chatbot.html" class="text-secondary">AI Health Assistant</a></li>
+            <h5 style="margin-bottom: 1rem;">Medical Services</h5>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.9rem;">
+              <li><a href="donor-search.html" class="text-secondary">Find Blood Donors</a></li>
+              <li><a href="request.html" class="text-secondary">Emergency Blood Request</a></li>
+              <li><a href="bloodbanks.html" class="text-secondary">Hospital Inventory</a></li>
+              <li><a href="compatibility.html" class="text-secondary">Transfusion Matrix</a></li>
+              <li><a href="chatbot.html" class="text-secondary">AI Doctor Assistant</a></li>
             </ul>
           </div>
 
           <div>
-            <h5 style="margin-bottom: 1rem; color: #fff;">User Portals</h5>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
-              <li><a href="login.html" class="text-secondary">Donor Login</a></li>
-              <li><a href="login.html" class="text-secondary">Hospital Portal</a></li>
-              <li><a href="login.html" class="text-secondary">Blood Bank Admin</a></li>
-              <li><a href="profile.html" class="text-secondary">Digital QR Card</a></li>
-              <li><a href="dashboard.html" class="text-secondary">Live Dashboard</a></li>
+            <h5 style="margin-bottom: 1rem;">Community & Portals</h5>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.9rem;">
+              <li><a href="register.html" class="text-secondary">Become A Voluntary Donor</a></li>
+              <li><a href="bloodbanks.html#camps" class="text-secondary">Blood Donation Camps</a></li>
+              <li><a href="profile.html" class="text-secondary">Digital QR Donor Card</a></li>
+              <li><a href="dashboard.html" class="text-secondary">Clinical Dashboard</a></li>
+              <li><a href="login.html" class="text-secondary">Hospital & Staff Portal</a></li>
             </ul>
           </div>
 
           <div>
-            <h5 style="margin-bottom: 1rem; color: #fff;">Emergency Helpline</h5>
-            <p style="font-size: 0.88rem; margin-bottom: 0.8rem;">24/7 National Emergency Blood Dispatch Hotline:</p>
-            <a href="tel:911" class="btn btn-sos btn-sm" style="width: 100%; margin-bottom: 0.8rem;">
-              <i class="fa-solid fa-phone"></i> CALL 911 / 108
+            <h5 style="margin-bottom: 1rem;">Emergency Hotline</h5>
+            <p style="font-size: 0.88rem; margin-bottom: 0.8rem; color: var(--text-secondary);">National 24/7 Emergency Ambulance & Blood Dispatch:</p>
+            <a href="tel:108" class="btn btn-sos btn-sm" style="width: 100%; margin-bottom: 0.8rem; padding: 0.75rem 1rem;">
+              <i class="fa-solid fa-phone"></i> CALL 108 / 112 / 102
             </a>
-            <span style="font-size: 0.75rem; color: var(--text-muted);">Toll-free emergency dispatch</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);"><i class="fa-solid fa-shield-heart text-emerald"></i> Toll-free emergency ambulance response</span>
           </div>
 
         </div>
 
-        <div class="flex justify-between items-center" style="border-top: 1px solid var(--border-glass); padding-top: 1.5rem; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; gap: 1rem;">
-          <div>© 2026 LifeLink AI. Designed with 3D Bio-Vessel Theme. All Rights Reserved.</div>
+        <div class="flex justify-between items-center" style="border-top: 1px solid var(--border-glass); padding-top: 1.75rem; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; gap: 1rem;">
+          <div>© 2026 LifeLink Care Network. National Emergency Blood Donation Ecosystem. All Rights Reserved.</div>
           <div class="flex gap-4">
-            <a href="#" class="text-secondary">Privacy Policy</a>
-            <a href="#" class="text-secondary">Terms of Service</a>
+            <a href="#" class="text-secondary">Privacy & DPDP Act</a>
+            <a href="#" class="text-secondary">Clinical Terms</a>
             <a href="#" class="text-secondary">Medical Disclaimer</a>
           </div>
         </div>
@@ -512,19 +926,26 @@
 
   </div>
 
-  <!-- EMERGENCY SOS COUNTDOWN MODAL -->
+  <!-- PERSISTENT FLOATING EMERGENCY BUTTON (VISIBLE ON EVERY PAGE) -->
+  <button class="persistent-emergency-btn btn-sos-trigger" id="btn-floating-emergency" title="Emergency Blood Request Broadcast">
+    <span class="emergency-pulse-ring"></span>
+    <i class="fa-solid fa-droplet"></i>
+    <span>REQUEST BLOOD NOW</span>
+  </button>
+
+  <!-- EMERGENCY SOS COUNTDOWN & TRIAGE MODAL -->
   <div id="modal-sos-countdown" class="modal-overlay">
-    <div class="modal-container text-center" style="border-color: #ff1744;">
-      <div style="font-size: 3.5rem; color: #ff1744; margin-bottom: 0.5rem; animation: pulse-sos 1s infinite;">
+    <div class="modal-container text-center" style="border-color: #dc2626; max-width: 520px;">
+      <div style="font-size: 3.5rem; color: #dc2626; margin-bottom: 0.5rem; animation: emergency-ring 1.5s infinite;">
         🚨
       </div>
-      <h2 style="color: #ff1744; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
-      <p style="margin-bottom: 1.5rem;">
-        Broadcasting emergency blood requirement and GPS location to all <b>compatible nearby donors</b>, <b>trauma centers</b>, and <b>emergency response dispatch</b> in:
+      <h2 style="color: #dc2626; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+        Broadcasting emergency blood requirement and GPS coordinates to all <b>compatible nearby donors</b>, <b>trauma centers</b>, and <b>emergency response dispatch</b> in:
       </p>
 
       <!-- Big Countdown Digits -->
-      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #ff1744; line-height: 1; margin-bottom: 1.5rem;">
+      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #dc2626; line-height: 1; margin-bottom: 1.5rem;">
         5
       </div>
 
@@ -550,7 +971,9 @@
   <script src="js/app.js"></script>
   <script src="js/sos.js"></script>
   <script src="js/donor-search.js"></script>
+  <script src="js/request.js"></script>
   <script src="js/bloodbanks.js"></script>
+  <script src="js/compatibility.js"></script>
 
 </body>
 </html>

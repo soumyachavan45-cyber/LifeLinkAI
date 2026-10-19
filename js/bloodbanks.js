@@ -94,9 +94,13 @@
               <button class="inventory-btn" data-inventory-action="inc" data-blood-group="${group}">+</button>
             </div>
 
+            <div style="margin: 0.9rem 0 0.6rem 0; height: 7px; background: var(--bg-surface-elevated); border-radius: 4px; overflow: hidden; border: 1px solid var(--border-glass);">
+              <div style="height: 100%; width: ${Math.min(100, Math.round((item.units / Math.max(item.units, item.minThreshold * 1.6)) * 100))}%; background: ${item.status === 'CRITICAL_LOW' ? '#dc2626' : item.status === 'LOW' ? '#f59e0b' : '#16a34a'}; border-radius: 4px; transition: width 0.3s ease;"></div>
+            </div>
+
             <div style="font-size: 0.78rem; color: var(--text-muted); display: flex; justify-content: space-between;">
-              <span>Min Required: ${item.minThreshold}</span>
-              <span>Available: <b>${item.units}</b></span>
+              <span>Min Safe: <b>${item.minThreshold}</b></span>
+              <span>Available: <b style="color: var(--text-primary);">${item.units} Units</b></span>
             </div>
           </div>
         `;

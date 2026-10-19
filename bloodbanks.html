@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospital Blood Inventory & Camps | LifeLink AI</title>
+  <title>Hospital Blood Inventory & Drives | LifeLink Emergency Network</title>
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,31 +32,45 @@
 
   <div class="app-wrapper">
     
-    <!-- Navbar -->
+    <!-- Main Navigation Bar -->
     <nav class="navbar">
       <div class="nav-container">
         <a href="index.html" class="nav-brand">
-          <div class="brand-icon"><i class="fa-solid fa-droplet"></i></div>
-          <span>LifeLink <span class="text-crimson">AI</span></span>
+          <div class="brand-icon"><i class="fa-solid fa-square-plus"></i></div>
+          <div class="flex flex-col">
+            <span style="line-height: 1.1;">LifeLink <span class="text-crimson">Care</span></span>
+            <span style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Blood Emergency Network</span>
+          </div>
         </a>
 
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="donor-search.html" class="nav-link">Find Donors</a></li>
-          <li><a href="request.html" class="nav-link">Request Blood</a></li>
-          <li><a href="bloodbanks.html" class="nav-link active">Inventory</a></li>
+          <li><a href="donor-search.html" class="nav-link">Find Blood</a></li>
+          <li><a href="register.html" class="nav-link">Donate Blood</a></li>
+          <li><a href="request.html" class="nav-link">Emergency Requests <span class="badge badge-crimson" style="padding: 0.15rem 0.45rem; font-size: 0.65rem;">LIVE</span></a></li>
+          <li><a href="bloodbanks.html" class="nav-link active">Hospitals & Banks</a></li>
           <li><a href="compatibility.html" class="nav-link">Compatibility</a></li>
-          <li><a href="chatbot.html" class="nav-link">AI Assistant</a></li>
+          <li><a href="chatbot.html" class="nav-link">AI Doctor</a></li>
           <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
         </ul>
 
         <div class="nav-actions">
-          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme">
+          <select id="lang-selector" class="form-select" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.82rem; border-radius: var(--radius-full);">
+            <option value="en">🇺🇸 EN</option>
+            <option value="hi">🇮🇳 हिंदी</option>
+            <option value="mr">🇮🇳 मराठी</option>
+            <option value="es">🇪🇸 ES</option>
+          </select>
+
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Calm Healthcare Light/Dark Mode">
             <i class="fa-solid fa-sun theme-toggle-icon"></i>
           </button>
           <button class="btn btn-sos btn-sm btn-sos-trigger">
             <i class="fa-solid fa-triangle-exclamation"></i> SOS
           </button>
+          <a href="login.html" class="btn btn-secondary btn-sm flex items-center gap-2">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+          </a>
         </div>
       </div>
     </nav>
@@ -67,17 +81,17 @@
       <!-- Section Header -->
       <div class="section-header">
         <span class="badge badge-amber"><i class="fa-solid fa-boxes-stacked"></i> LIVE HOSPITAL BIO-STOCK</span>
-        <h2>Regional Blood Bank & Inventory Grid</h2>
-        <p>Real-time units monitoring for all 8 blood groups with live +/- adjustment controls and automated critical shortage warnings.</p>
+        <h2>Regional Blood Bank Reserves & Inventory Grid</h2>
+        <p>Real-time units monitoring for all 8 blood groups with live +/- adjustment controls, liquid fill percentages, and automated critical shortage warnings.</p>
       </div>
 
       <!-- Quick Stats Banner -->
       <div class="role-switcher-bar" style="margin-bottom: 2.5rem;">
         <div class="flex items-center gap-3">
-          <i class="fa-solid fa-hospital-user text-crimson fa-lg"></i>
+          <i class="fa-solid fa-hospital-user text-crimson fa-2x"></i>
           <div>
-            <h5 style="margin: 0;">Metropolitan Regional Blood Reserve</h5>
-            <p style="font-size: 0.8rem; margin: 0;">Connected to 12 Regional Trauma Hubs • Synchronized Live</p>
+            <h5 style="margin: 0;">National Trauma Bio-Reserve Grid (India)</h5>
+            <p style="font-size: 0.82rem; margin: 0; color: var(--text-muted);">Synchronized across 420+ Certified Hospitals & Regional Centers</p>
           </div>
         </div>
         <div class="flex gap-2">
@@ -88,14 +102,14 @@
 
       <!-- 8-Blood Group Real-Time Inventory Grid -->
       <div id="hospital-inventory-grid" class="inventory-grid" style="margin-bottom: 4rem;">
-        <!-- Populated by bloodbanks.js with +/- controls -->
+        <!-- Populated by bloodbanks.js with +/- controls and liquid fill meters -->
       </div>
 
       <!-- UPCOMING DONATION CAMPS SECTION -->
-      <div class="section-header">
+      <div class="section-header" id="camps">
         <span class="badge badge-emerald"><i class="fa-solid fa-tent"></i> COMMUNITY OUTREACH</span>
         <h2>Upcoming Blood Drives & Donation Camps</h2>
-        <p>Register as a donor or volunteer for organized medical donation camps in your area.</p>
+        <p>Register as a voluntary donor or medical volunteer for certified blood donation drives in your metropolitan region.</p>
       </div>
 
       <div id="donation-camps-grid" class="grid grid-cols-2 gap-6">
@@ -107,10 +121,41 @@
     <!-- Footer -->
     <footer style="background: var(--bg-surface-elevated); border-top: 1px solid var(--border-glass); padding: 2.5rem 0; text-align: center; font-size: 0.88rem; color: var(--text-muted);">
       <div class="container">
-        © 2026 LifeLink AI Platform • Regional Bio-Stock Management System
+        © 2026 LifeLink Care Network • Regional Bio-Stock Management System
       </div>
     </footer>
 
+  </div>
+
+  <!-- PERSISTENT FLOATING EMERGENCY BUTTON -->
+  <button class="persistent-emergency-btn btn-sos-trigger" id="btn-floating-emergency" title="Emergency Blood Request Broadcast">
+    <span class="emergency-pulse-ring"></span>
+    <i class="fa-solid fa-droplet"></i>
+    <span>REQUEST BLOOD NOW</span>
+  </button>
+
+  <!-- SOS COUNTDOWN & TRIAGE MODAL -->
+  <div id="modal-sos-countdown" class="modal-overlay">
+    <div class="modal-container text-center" style="border-color: #dc2626; max-width: 520px;">
+      <div style="font-size: 3.5rem; color: #dc2626; margin-bottom: 0.5rem; animation: emergency-ring 1.5s infinite;">
+        🚨
+      </div>
+      <h2 style="color: #dc2626; margin-bottom: 0.5rem;">CRITICAL EMERGENCY SOS</h2>
+      <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+        Broadcasting emergency blood requirement and GPS location to all <b>compatible nearby donors</b>, <b>trauma centers</b>, and <b>emergency response dispatch</b> in:
+      </p>
+      <div id="sos-timer-number" style="font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; color: #dc2626; line-height: 1; margin-bottom: 1.5rem;">
+        5
+      </div>
+      <div class="flex gap-3 justify-center">
+        <button id="btn-cancel-sos" class="btn btn-secondary btn-lg">
+          <i class="fa-solid fa-xmark"></i> Cancel (False Alarm)
+        </button>
+        <button id="btn-confirm-instant-sos" class="btn btn-sos btn-lg">
+          <i class="fa-solid fa-bolt"></i> Send Instantly Now
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->

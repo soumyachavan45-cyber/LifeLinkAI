@@ -27,14 +27,25 @@
   pointer-events: none;
 }
 
+[data-theme="light"] .glass-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+}
+
 [data-theme="light"] .glass-card::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+  display: none;
 }
 
 .glass-card:hover {
   border-color: var(--border-glass-hover);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg), 0 0 25px var(--primary-glow-subtle);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .glass-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
 }
 
 .glass-card-interactive {
@@ -42,25 +53,27 @@
 }
 
 .glass-card-hero {
-  background: linear-gradient(135deg, rgba(229, 57, 53, 0.08) 0%, rgba(14, 18, 26, 0.75) 100%);
-  border: 1px solid rgba(229, 57, 53, 0.25);
+  background: linear-gradient(135deg, rgba(214, 40, 40, 0.05) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(214, 40, 40, 0.2);
   backdrop-filter: blur(20px);
 }
 
 [data-theme="light"] .glass-card-hero {
-  background: linear-gradient(135deg, rgba(255, 235, 238, 0.92) 0%, rgba(255, 255, 255, 0.96) 100%);
-  border-color: rgba(229, 57, 53, 0.35);
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
 }
 
 .glass-card-critical {
-  border-color: rgba(255, 23, 68, 0.45);
-  background: linear-gradient(135deg, rgba(255, 23, 68, 0.12) 0%, rgba(14, 18, 26, 0.85) 100%);
-  animation: border-glow-critical 3s infinite alternate;
+  border-color: rgba(220, 38, 38, 0.45);
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
 }
 
 [data-theme="light"] .glass-card-critical {
-  background: linear-gradient(135deg, rgba(255, 235, 238, 0.95) 0%, #ffffff 100%);
-  border-color: rgba(229, 57, 53, 0.45);
+  background: #ffffff;
+  border-color: #fca5a5;
+  border-left: 4px solid #dc2626;
+  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.08);
 }
 
 @keyframes border-glow-critical {

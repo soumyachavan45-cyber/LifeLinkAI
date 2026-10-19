@@ -31,6 +31,22 @@
     }
 
     init() {
+      // Parse URL parameters (e.g. from homepage quick finder or blood group cards)
+      const urlParams = new URLSearchParams(window.location.search);
+      const bgParam = urlParams.get('bg');
+      const cityParam = urlParams.get('city');
+
+      if (bgParam) {
+        this.currentFilter.bloodGroup = bgParam;
+        const bgSelect = document.getElementById('search-blood-group');
+        if (bgSelect) bgSelect.value = bgParam;
+      }
+      if (cityParam) {
+        this.currentFilter.city = cityParam;
+        const citySelect = document.getElementById('search-city');
+        if (citySelect) citySelect.value = cityParam;
+      }
+
       this.bindEvents();
       this.renderDonorCards();
       this.initMap();
@@ -266,6 +282,7 @@
         this.map.flyTo([20.5937, 78.9629], 5, { duration: 1.2 });
       }
 
+      // 1. Plot Verified Donors (Green / Crimson Badges)
       donors.forEach((d, i) => {
         const lat = d.lat || (19.0760 + (Math.sin(i * 1.5) * 0.04));
         const lng = d.lng || (72.8777 + (Math.cos(i * 1.5) * 0.05));
@@ -273,7 +290,7 @@
         const customIcon = L.divIcon({
           className: 'custom-donor-pin',
           html: `
-            <div style="background: #d32f2f; color: white; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; border: 2px solid white; box-shadow: 0 0 15px rgba(211,47,47,0.8);">
+            <div style="background: #16a34a; color: white; border-radius: 50%; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; border: 2px solid white; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.5);">
               ${d.bloodGroup}
             </div>
           `,
@@ -283,15 +300,117 @@
 
         const marker = L.marker([lat, lng], { icon: customIcon }).addTo(this.map);
         marker.bindPopup(`
-          <div style="padding: 6px; color: #111; font-family: sans-serif;">
-            <strong style="color: #d32f2f; font-size: 14px;">${d.name} (${d.bloodGroup})</strong><br/>
-            <span style="font-size: 12px; color: #555;"><i class="fa-solid fa-location-dot"></i> ${d.area || d.city}</span><br/>
-            <span style="font-size: 12px;">Distance: <b>${d.distanceKm} km</b> | AI Match: <b>${d.aiScore}%</b></span><br/>
-            <span style="font-size: 12px;">Phone: <b>${d.phone}</b></span><br/>
-            <button onclick="LifeLinkSearch.handleDirectDonorRequest('${d.id}')" style="margin-top:8px; background:#d32f2f; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-weight:bold; width:100%;">Request Blood Now</button>
+          <div style="padding: 8px; color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, sans-serif; min-width: 200px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
+              <span style="font-size:10px; font-weight:800; color:#16a34a; text-transform:uppercase;">● Verified Donor</span>
+              <span style="background:#fef2f2; color:#d62828; font-weight:800; font-size:11px; padding:2px 6px; border-radius:10px;">${d.bloodGroup}</span>
+            </div>
+            <strong style="font-size: 14px; color: #0f172a;">${d.name}</strong><br/>
+            <span style="font-size: 12px; color: #64748b;"><i class="fa-solid fa-location-dot text-crimson"></i> ${d.area || d.city}</span><br/>
+            <div style="margin-top:6px; font-size: 11px; color:#475569;">
+              Distance: <b>${d.distanceKm} km</b> • Match Score: <b>${d.aiScore}%</b>
+            </div>
+            <button onclick="LifeLinkSearch.handleDirectDonorRequest('${d.id}')" style="margin-top:8px; background:#d62828; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700; font-size:12px; width:100%;">
+              <i class="fa-solid fa-bell"></i> Request Blood
+            </button>
           </div>
         `);
         this.markers.push(marker);
+      });
+
+      // 2. Plot Active Emergency Patients (Pulsing Red)
+      const emergencyRequests = window.LifeLinkDB ? window.LifeLinkDB.getRequests() : [];
+      emergencyRequests.forEach((req, idx) => {
+        const patientCoords = req.city === 'New Delhi' ? [28.5672 + idx*0.02, 77.2100 + idx*0.015] :
+                              req.city === 'Hyderabad' ? [17.4177 + idx*0.02, 78.4140 + idx*0.015] :
+                              [19.0150 + idx*0.02, 72.8350 + idx*0.015];
+
+        const patientIcon = L.divIcon({
+          className: 'custom-patient-pin',
+          html: `
+            <div style="background: #dc2626; color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid white; box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.35); animation: pulse-ring 1.5s infinite;">
+              <i class="fa-solid fa-bed-pulse"></i>
+            </div>
+          `,
+          iconSize: [36, 36],
+          iconAnchor: [18, 18]
+        });
+
+        const pMarker = L.marker(patientCoords, { icon: patientIcon }).addTo(this.map);
+        pMarker.bindPopup(`
+          <div style="padding: 8px; font-family: -apple-system, sans-serif; min-width: 210px;">
+            <div style="font-size:10px; font-weight:800; color:#dc2626; text-transform:uppercase;">🚨 EMERGENCY BLOOD CALL</div>
+            <strong style="font-size: 14px;">${req.patientName} (${req.bloodGroup})</strong><br/>
+            <span style="font-size: 12px; color: #64748b;">${req.hospital}</span><br/>
+            <span style="font-size: 11px; color: #dc2626; font-weight:700;">Needs ${req.units} Units • Urgency: ${req.urgency}</span><br/>
+            <a href="request.html" style="display:inline-block; margin-top:8px; text-align:center; background:#dc2626; color:#fff; padding:5px 10px; border-radius:6px; font-size:12px; font-weight:700; width:100%; text-decoration:none;">
+              Help Patient Now →
+            </a>
+          </div>
+        `);
+        this.markers.push(pMarker);
+      });
+
+      // 3. Plot Regional Hospitals (Trust Blue)
+      const hospitals = [
+        { name: 'AIIMS Apex Trauma Center', city: 'New Delhi', lat: 28.5672, lng: 77.2100, beds: 14 },
+        { name: 'Tata Memorial Hospital', city: 'Mumbai', lat: 19.0060, lng: 72.8427, beds: 8 },
+        { name: 'Apollo Hospitals Healthcare', city: 'Hyderabad', lat: 17.4177, lng: 78.4140, beds: 12 },
+        { name: 'KEM Hospital & Research', city: 'Mumbai', lat: 19.0029, lng: 72.8426, beds: 6 }
+      ];
+
+      hospitals.forEach(h => {
+        const hospitalIcon = L.divIcon({
+          className: 'custom-hospital-pin',
+          html: `
+            <div style="background: #2563eb; color: white; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);">
+              <i class="fa-solid fa-hospital"></i>
+            </div>
+          `,
+          iconSize: [34, 34],
+          iconAnchor: [17, 17]
+        });
+
+        const hMarker = L.marker([h.lat, h.lng], { icon: hospitalIcon }).addTo(this.map);
+        hMarker.bindPopup(`
+          <div style="padding: 8px; font-family: -apple-system, sans-serif; min-width: 190px;">
+            <div style="font-size:10px; font-weight:800; color:#2563eb; text-transform:uppercase;">🏥 PARTNER HOSPITAL</div>
+            <strong style="font-size: 13px;">${h.name}</strong><br/>
+            <span style="font-size: 11px; color:#64748b;">${h.city} • Trauma Desk 24/7</span><br/>
+            <span style="font-size: 11px; color:#16a34a; font-weight:700;">● Active Blood Requisition Ready</span>
+          </div>
+        `);
+        this.markers.push(hMarker);
+      });
+
+      // 4. Plot Regional Blood Banks (Amber)
+      const bloodBanks = [
+        { name: 'National Red Cross Bio-Bank', city: 'Mumbai', lat: 19.0657, lng: 72.8687, units: 140 },
+        { name: 'Central Delhi Blood Center', city: 'New Delhi', lat: 28.6304, lng: 77.2177, units: 95 }
+      ];
+
+      bloodBanks.forEach(b => {
+        const bankIcon = L.divIcon({
+          className: 'custom-bank-pin',
+          html: `
+            <div style="background: #f59e0b; color: white; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid white; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.45);">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+          `,
+          iconSize: [34, 34],
+          iconAnchor: [17, 17]
+        });
+
+        const bMarker = L.marker([b.lat, b.lng], { icon: bankIcon }).addTo(this.map);
+        bMarker.bindPopup(`
+          <div style="padding: 8px; font-family: -apple-system, sans-serif; min-width: 180px;">
+            <div style="font-size:10px; font-weight:800; color:#f59e0b; text-transform:uppercase;">🏦 REGIONAL BLOOD BANK</div>
+            <strong style="font-size: 13px;">${b.name}</strong><br/>
+            <span style="font-size: 11px; color:#64748b;">${b.city} • Reserve: <b>${b.units} Units</b></span><br/>
+            <a href="bloodbanks.html" style="font-size: 11px; color:#2563eb; font-weight:700; text-decoration:none;">View Full Inventory →</a>
+          </div>
+        `);
+        this.markers.push(bMarker);
       });
     }
 

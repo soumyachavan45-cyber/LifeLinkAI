@@ -5,104 +5,110 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Brand Color Palette - Deep Ruby & Crimson Medical Theme */
-  --primary-50: #ffebee;
-  --primary-100: #ffcdd2;
-  --primary-200: #ef9a9a;
-  --primary-300: #e57373;
-  --primary-400: #ef5350;
-  --primary-500: #e53935; /* Primary Red */
-  --primary-600: #d32f2f;
-  --primary-700: #c62828;
-  --primary-800: #b71c1c;
-  --primary-900: #880e4f;
-  --primary-glow: rgba(229, 57, 53, 0.45);
-  --primary-glow-subtle: rgba(229, 57, 53, 0.15);
+  /* Brand Healthcare Palette - Stripe, Apple, Red Cross Standard */
+  --primary-50: #fef2f2;
+  --primary-100: #fee2e2;
+  --primary-200: #fecaca;
+  --primary-300: #fca5a5;
+  --primary-400: #f87171;
+  --primary-500: #d62828; /* Calm Emergency Blood Red */
+  --primary-600: #b91c1c;
+  --primary-700: #991b1b;
+  --primary-800: #7f1d1d;
+  --primary-900: #450a0a;
+  --primary-glow: rgba(214, 40, 40, 0.25);
+  --primary-glow-subtle: rgba(214, 40, 40, 0.1);
 
-  /* Secondary & Accents */
-  --accent-cyan: #00e5ff;
-  --accent-cyan-glow: rgba(0, 229, 255, 0.35);
-  --accent-emerald: #00e676;
-  --accent-emerald-glow: rgba(0, 230, 118, 0.35);
-  --accent-amber: #ffab00;
-  --accent-amber-glow: rgba(255, 171, 0, 0.35);
-  --accent-purple: #b388ff;
+  /* Trust Blue, Recovery Green, Attention Amber */
+  --secondary-50: #eff6ff;
+  --secondary-500: #2563eb; /* Trust Blue */
+  --secondary-600: #1d4ed8;
+  --accent-cyan: #0284c7;   /* Clinical Medical Blue */
+  --accent-emerald: #16a34a; /* Healthy Recovery Green */
+  --accent-emerald-surface: #f0fdf4;
+  --accent-amber: #f59e0b;  /* Emergency Attention Amber */
+  --accent-amber-surface: #fffbeb;
+  --accent-purple: #7c3aed;
 
-  /* Dark Theme (Default) */
-  --bg-main: #07090e;
-  --bg-surface: #0e121a;
-  --bg-surface-elevated: #151a24;
-  --bg-surface-card: rgba(18, 24, 38, 0.75);
-  --bg-glass: rgba(14, 18, 26, 0.65);
-  --bg-glass-heavy: rgba(10, 13, 20, 0.88);
+  /* Clinical Dark Theme */
+  --bg-main: #090d16;
+  --bg-surface: #0f172a;
+  --bg-surface-elevated: #1e293b;
+  --bg-surface-card: rgba(17, 24, 39, 0.85);
+  --bg-glass: rgba(15, 23, 42, 0.8);
+  --bg-glass-heavy: rgba(9, 13, 22, 0.95);
   --bg-glass-light: rgba(255, 255, 255, 0.04);
   
-  --border-glass: rgba(255, 255, 255, 0.08);
-  --border-glass-hover: rgba(229, 57, 53, 0.4);
-  --border-glass-active: rgba(229, 57, 53, 0.8);
+  --border-glass: rgba(255, 255, 255, 0.09);
+  --border-glass-hover: rgba(214, 40, 40, 0.4);
+  --border-glass-active: rgba(214, 40, 40, 0.8);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --text-inverted: #07090e;
+  --text-inverted: #090d16;
 
-  /* Gradients */
-  --grad-primary: linear-gradient(135deg, #ff1744 0%, #d50000 50%, #880e4f 100%);
-  --grad-blood: linear-gradient(180deg, #ff5252 0%, #d32f2f 60%, #4a0007 100%);
-  --grad-plasma: linear-gradient(135deg, #00e5ff 0%, #0091ea 100%);
-  --grad-emerald: linear-gradient(135deg, #00e676 0%, #00b0ff 100%);
-  --grad-dark-card: linear-gradient(145deg, rgba(26, 32, 48, 0.8) 0%, rgba(12, 16, 26, 0.9) 100%);
-  --grad-glass-border: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(229,57,53,0.3) 50%, rgba(255,255,255,0.05) 100%);
+  /* Calm Healthcare Gradients */
+  --grad-primary: linear-gradient(135deg, #d62828 0%, #b91c1c 100%);
+  --grad-blood: linear-gradient(180deg, #ef4444 0%, #d62828 65%, #991b1b 100%);
+  --grad-plasma: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  --grad-emerald: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+  --grad-dark-card: linear-gradient(145deg, rgba(26, 32, 48, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  --grad-glass-border: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(214,40,40,0.2) 50%, rgba(255,255,255,0.03) 100%);
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 30px var(--primary-glow);
-  --shadow-glow-cyan: 0 0 30px var(--accent-cyan-glow);
+  /* Apple & Stripe Style Soft Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px -1px rgba(15, 23, 42, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -2px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 0 25px var(--primary-glow);
 
   /* Typography */
-  --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Layout & Spacing */
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-normal: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Theme Variables */
+/* Calm Healthcare Light Theme (Default Standard) */
 [data-theme="light"] {
-  --bg-main: #f4f7fb;
+  --bg-main: #fafafa;
   --bg-surface: #ffffff;
-  --bg-surface-elevated: #f1f5f9;
-  --bg-surface-card: rgba(255, 255, 255, 0.92);
-  --bg-glass: rgba(255, 255, 255, 0.82);
-  --bg-glass-heavy: rgba(255, 255, 255, 0.96);
-  --bg-glass-light: rgba(241, 245, 249, 0.85);
+  --bg-surface-elevated: #f8fafc;
+  --bg-surface-card: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.94);
+  --bg-glass-heavy: #ffffff;
+  --bg-glass-light: #f1f5f9;
   
-  --border-glass: rgba(15, 23, 42, 0.08);
-  --border-glass-hover: rgba(229, 57, 53, 0.5);
-  --border-glass-active: rgba(229, 57, 53, 0.9);
+  --border-glass: #e2e8f0;
+  --border-glass-hover: rgba(214, 40, 40, 0.4);
+  --border-glass-active: #d62828;
 
   --text-primary: #0f172a;
-  --text-secondary: #334155;
+  --text-secondary: #475569;
   --text-muted: #64748b;
-  --text-inverted: #f8fafc;
+  --text-inverted: #ffffff;
 
-  --grad-dark-card: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 245, 249, 0.92) 100%);
-  --grad-glass-border: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(229,57,53,0.3) 50%, rgba(0,0,0,0.06) 100%);
-  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --grad-primary: linear-gradient(135deg, #d62828 0%, #b91c1c 100%);
+  --grad-dark-card: #ffffff;
+  --grad-glass-border: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(214,40,40,0.15) 50%, rgba(226,232,240,0.8) 100%);
+  
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
 }
 
 /* Base Reset */
@@ -697,7 +703,7 @@ a {
 }
 
 [data-theme="light"] .emergency-ticker {
-  background: linear-gradient(90deg, #c62828 0%, #e53935 100%);
+  background: linear-gradient(90deg, #b91c1c 0%, #d62828 100%);
   color: #ffffff;
 }
 
@@ -706,5 +712,432 @@ a {
 }
 
 [data-theme="light"] ::-webkit-scrollbar-thumb {
-  background: rgba(229, 57, 53, 0.4);
+  background: rgba(214, 40, 40, 0.35);
 }
+
+/* ==========================================================================
+   HEALTHCARE & EMERGENCY RESPONSE ECOSYSTEM DESIGN (Apple / Stripe standard)
+   ========================================================================== */
+
+/* Persistent Floating Emergency Button (Always Visible) */
+.persistent-emergency-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.6rem;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 25px -3px rgba(220, 38, 38, 0.5), 0 4px 6px -4px rgba(220, 38, 38, 0.3);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  user-select: none;
+}
+
+.persistent-emergency-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 16px 32px -4px rgba(220, 38, 38, 0.65);
+}
+
+.persistent-emergency-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.emergency-pulse-ring {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.8);
+  animation: emergency-ring 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+  display: inline-block;
+}
+
+@keyframes emergency-ring {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9); }
+  70% { box-shadow: 0 0 0 14px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* Hero Quick Command Bar */
+.hero-command-card {
+  background: var(--bg-surface-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-lg);
+  margin-top: 2rem;
+  backdrop-filter: blur(16px);
+}
+
+.command-bar-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .command-bar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Real-World Blood Donation Ecosystem Diagram */
+.ecosystem-container {
+  background: var(--bg-surface-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 2.25rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.ecosystem-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  position: relative;
+}
+
+.ecosystem-node {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.ecosystem-node:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-400);
+}
+
+.ecosystem-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.ecosystem-icon-wrapper.patient { background: rgba(220, 38, 38, 0.12); color: #dc2626; }
+.ecosystem-icon-wrapper.donor { background: rgba(22, 163, 74, 0.12); color: #16a34a; }
+.ecosystem-icon-wrapper.hospital { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+.ecosystem-icon-wrapper.bloodbank { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+
+.ecosystem-node-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.ecosystem-node-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Trusted By Hospital & Institutional Strip */
+.trusted-institutions-bar {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-glass);
+  border-bottom: 1px solid var(--border-glass);
+  padding: 2.25rem 0;
+}
+
+.trust-badges-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.trust-partner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.trust-partner-pill:hover {
+  border-color: var(--secondary-500);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+/* 6-Step Clinical Timeline: How LifeLink Works */
+.clinical-timeline {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.25rem;
+  position: relative;
+  margin: 3rem 0 1rem 0;
+}
+
+@media (max-width: 992px) {
+  .clinical-timeline {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .clinical-timeline {
+    grid-template-columns: 1fr;
+  }
+}
+
+.timeline-step-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.25rem;
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-500);
+}
+
+.timeline-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary-surface, rgba(214, 40, 40, 0.1));
+  color: #d62828;
+  font-weight: 800;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.timeline-step-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.timeline-step-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Available Blood Types (Large 8-Group Interactive Grid) */
+.blood-types-grid-8 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .blood-types-grid-8 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .blood-types-grid-8 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.blood-type-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 1.5rem;
+  cursor: pointer;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.blood-type-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-500);
+}
+
+.blood-type-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.blood-type-symbol {
+  font-size: 1.9rem;
+  font-weight: 900;
+  font-family: var(--font-heading);
+  color: #d62828;
+}
+
+.blood-type-status-pill {
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.blood-type-status-pill.optimal {
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+  border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+.blood-type-status-pill.low {
+  background: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.blood-type-status-pill.critical {
+  background: rgba(220, 38, 38, 0.12);
+  color: #dc2626;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.blood-type-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.35rem 0;
+  border-top: 1px solid var(--border-glass);
+}
+
+.blood-type-stat-row span:first-child {
+  color: var(--text-muted);
+}
+
+.blood-type-stat-row span:last-child {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Emergency Blood Request Live Feed Cards */
+.emergency-feed-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-glass);
+  border-left: 4px solid var(--primary-500);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all var(--transition-fast);
+}
+
+.emergency-feed-card:hover {
+  transform: translateX(3px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--primary-500);
+}
+
+.emergency-feed-card.critical {
+  border-left-color: #dc2626;
+}
+
+.emergency-feed-card.urgent {
+  border-left-color: #f59e0b;
+}
+
+@media (max-width: 768px) {
+  .emergency-feed-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Uber-Style Emergency Map Experience */
+.map-command-layout {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-xl);
+}
+
+.map-floating-legend {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  background: var(--bg-surface-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1.25rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.legend-icon-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.legend-icon-dot.patient { background: #dc2626; }
+.legend-icon-dot.donor { background: #16a34a; }
+.legend-icon-dot.hospital { background: #2563eb; }
+.legend-icon-dot.bloodbank { background: #f59e0b; }
+.legend-icon-dot.volunteer { background: #7c3aed; }
+
