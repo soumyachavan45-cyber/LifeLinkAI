@@ -51,9 +51,15 @@
 
         <!-- Grid Col 3: Action Buttons (Right) -->
         <div class="nav-actions" role="toolbar" aria-label="User Actions">
-          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme" aria-label="Toggle Calm Healthcare Light/Dark Theme">
-            <i class="fa-solid fa-sun theme-toggle-icon" aria-hidden="true"></i>
-          </button>
+          <!-- Explicit Dark & Light Mode Segmented Options -->
+          <div class="theme-mode-selector" role="radiogroup" aria-label="Theme mode switcher">
+            <button type="button" class="theme-option-btn active" data-theme-val="light" aria-label="Light mode" title="Switch to Light Mode" role="radio" aria-checked="true">
+              <i class="fa-solid fa-sun" aria-hidden="true"></i> <span>Light</span>
+            </button>
+            <button type="button" class="theme-option-btn" data-theme-val="dark" aria-label="Dark mode" title="Switch to Dark Mode" role="radio" aria-checked="false">
+              <i class="fa-solid fa-moon" aria-hidden="true"></i> <span>Dark</span>
+            </button>
+          </div>
           <a href="index.html" class="btn btn-glass btn-sm" role="button">
             <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Home
           </a>

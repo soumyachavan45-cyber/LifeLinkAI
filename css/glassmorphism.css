@@ -263,6 +263,71 @@
   box-sizing: border-box;
 }
 
+/* Segmented Dark/Light Theme Control Pill */
+.theme-mode-selector {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  padding: 3px;
+  gap: 2px;
+  height: 38px;
+  box-sizing: border-box;
+}
+
+[data-theme="light"] .theme-mode-selector {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+[data-theme="dark"] .theme-mode-selector {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-option-btn {
+  display: inline-grid;
+  grid-auto-flow: column;
+  place-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  height: 30px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.theme-option-btn i {
+  font-size: 0.8rem;
+}
+
+.theme-option-btn:hover {
+  color: var(--text-primary);
+}
+
+.theme-option-btn.active {
+  background: #ffffff;
+  color: var(--primary-600);
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="dark"] .theme-option-btn.active {
+  background: #0f172a;
+  color: #38bdf8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
 /* Responsive CSS Grid Rules */
 @media (max-width: 1200px) {
   .nav-container {

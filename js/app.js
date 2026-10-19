@@ -115,8 +115,15 @@
     }
 
     bindEvents() {
-      // Theme Toggle Buttons
+      // Theme Toggle Buttons & Explicit Options
       document.addEventListener('click', (e) => {
+        const themeOpt = e.target.closest('[data-theme-val]');
+        if (themeOpt) {
+          const val = themeOpt.getAttribute('data-theme-val');
+          this.applyTheme(val);
+          return;
+        }
+
         const themeBtn = e.target.closest('#theme-toggle-btn, .theme-toggle-btn');
         if (themeBtn) {
           const newTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
@@ -158,6 +165,18 @@
       this.currentTheme = theme;
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('lifelink_theme', theme);
+
+      // Update segmented theme option buttons
+      document.querySelectorAll('.theme-option-btn').forEach(btn => {
+        const val = btn.getAttribute('data-theme-val');
+        if (val === theme) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-checked', 'true');
+        } else {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-checked', 'false');
+        }
+      });
 
       // Update toggle icon
       document.querySelectorAll('.theme-toggle-icon').forEach(icon => {
