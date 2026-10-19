@@ -96,8 +96,13 @@
 
   class AppController {
     constructor() {
+      // Healthcare Redesign: Default to Calm Light Mode
+      if (localStorage.getItem('lifelink_v2_theme_set') !== 'true') {
+        localStorage.setItem('lifelink_theme', 'light');
+        localStorage.setItem('lifelink_v2_theme_set', 'true');
+      }
       this.currentLang = localStorage.getItem('lifelink_lang') || 'en';
-      this.currentTheme = localStorage.getItem('lifelink_theme') || 'dark';
+      this.currentTheme = localStorage.getItem('lifelink_theme') || 'light';
       this.init();
     }
 
@@ -128,7 +133,10 @@
         const menuToggle = e.target.closest('#mobile-menu-toggle');
         if (menuToggle) {
           const navLinks = document.querySelector('.nav-links');
-          if (navLinks) navLinks.classList.toggle('active');
+          if (navLinks) {
+            const isActive = navLinks.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+          }
         }
 
         // Modal Close Triggers

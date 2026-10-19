@@ -32,26 +32,33 @@
 
   <div class="app-wrapper">
     
-    <!-- Navbar -->
-    <nav class="navbar">
+    <!-- Main Navigation Bar -->
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
       <div class="nav-container">
-        <a href="index.html" class="nav-brand">
-          <div class="brand-icon"><i class="fa-solid fa-square-plus"></i></div>
-          <div class="flex flex-col">
-            <span style="line-height: 1.1;">LifeLink <span class="text-crimson">Care</span></span>
-            <span style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Blood Emergency Network</span>
+        <!-- Grid Col 1: Brand / Logo -->
+        <a href="index.html" class="nav-brand" aria-label="LifeLink Care Emergency Network Home">
+          <div class="brand-icon" aria-hidden="true">
+            <i class="fa-solid fa-square-plus"></i>
+          </div>
+          <div class="brand-text-group">
+            <span class="brand-title">LifeLink <span class="text-crimson">Care</span></span>
+            <span class="brand-subtitle">National Emergency Network</span>
           </div>
         </a>
 
-        <div class="nav-actions">
-          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Calm Healthcare Light/Dark Mode">
-            <i class="fa-solid fa-sun theme-toggle-icon"></i>
+        <!-- Grid Col 2: Center Spacer for Grid Balance -->
+        <div></div>
+
+        <!-- Grid Col 3: Action Buttons (Right) -->
+        <div class="nav-actions" role="toolbar" aria-label="User Actions">
+          <button id="theme-toggle-btn" class="btn btn-glass btn-icon" title="Toggle Theme" aria-label="Toggle Calm Healthcare Light/Dark Theme">
+            <i class="fa-solid fa-sun theme-toggle-icon" aria-hidden="true"></i>
           </button>
-          <a href="index.html" class="btn btn-glass btn-sm">
-            <i class="fa-solid fa-arrow-left"></i> Home
+          <a href="index.html" class="btn btn-glass btn-sm" role="button">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Home
           </a>
-          <button class="btn btn-sos btn-sm btn-sos-trigger">
-            <i class="fa-solid fa-triangle-exclamation"></i> SOS
+          <button class="btn btn-sos btn-sm btn-sos-trigger" title="Trigger Instant Emergency SOS" aria-label="Instant Emergency SOS Broadcast">
+            <i class="fa-solid fa-bolt" aria-hidden="true"></i> SOS
           </button>
         </div>
       </div>
